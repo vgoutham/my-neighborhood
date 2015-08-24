@@ -1,7 +1,7 @@
 var React = require('react');
 
 var seattleNeighborhoods = require('../data/geojson_cleanedup.js');
-var config = require('../config/config.js');
+var config = require('../config.js');
 
 var MapContainer = module.exports = React.createClass({
 
@@ -9,7 +9,7 @@ var MapContainer = module.exports = React.createClass({
 		return {
 			neighborhoodGeoJson: seattleNeighborhoods
 		}
-	}, 
+	},
 	componentDidMount: function() {
 		var map = this.map = L.map(this.getDOMNode(), {
 			center: [47.609, -122.332099],
@@ -20,16 +20,16 @@ var MapContainer = module.exports = React.createClass({
 				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 										attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 										id: 'mobot11.1dba3612',
-										accessToken: config.Mapbox_token 
+										accessToken: config.Mapbox_token
 									})
 			],
 			attributionControl: false,
 		});
 
-		
+
 
 	},
-	
+
 //	getColor: function(m) {
 //		m = parseInt(m);
 //		if(m > 1000000) return '#800026';
@@ -42,7 +42,7 @@ var MapContainer = module.exports = React.createClass({
 //		else if(m > 0)  return '#FFEDA0';
 //		else return 'grey';
 //	},
-//	
+//
 	Style: function(neighborhood) {
 		return {
 			fillColor : getColor(neighborhood.median),
@@ -54,7 +54,7 @@ var MapContainer = module.exports = React.createClass({
 			dashArray: '3'
 		}
 	},
-//	
+//
 	addGeojsonLayer : function() {
 		this.state.seattleNeighborhoods.map(function(neighborhood) {
 			L.geoJson(neighborhood, {
@@ -62,7 +62,7 @@ var MapContainer = module.exports = React.createClass({
 			}).addTo(map);
 		})
 	},
-//	
+//
 //	highlightFeature: function(e) {
 //		var layer = e.target;
 //		layer.setStyle({
@@ -75,15 +75,15 @@ var MapContainer = module.exports = React.createClass({
 //			layer.bringToFront();
 //		}
 //	},
-//	
+//
 //	resetHighlight: function(e) {
 //		geojson.resetStyle(e.target);
 //	},
-//	
+//
 //	zoomToFeature: function(e) {
 //		map.fitBounds(e.target.getBounds());
 //	},
-//	
+//
 //	onEachFeature: function (feature, layer) {
 //		layer.on({
 //			mouseover: this.highlightFeature,
@@ -91,32 +91,32 @@ var MapContainer = module.exports = React.createClass({
 ////			click: zoomToFeature // need to add http call here
 //		});
 //	},
-//	
+//
 //	geojson = L.geoJson(seattleNeighborhoods, {
 //		style: this.Style,
 //		onEachFeature: this.onEachFeature
 //	}).addTo(map);
-//	
+//
 
 	//	componentWillUnmount: function() {
 	//		this.map.off('click', this.onMapClick);
 	//		this.map = null;
 	//	},
-	//	
+	//
 //	onMapClick: function() {
 //		console.log('clicked');
 //		// Do some wonderful map things...
 //	},
-	
-	
-																											
+
+
+
 	render: function() {
 		var style = {height: '50em'};
 		return (
 			<div style={style}></div>
 		)
 	}
-	
+
 });
 
 
@@ -132,7 +132,7 @@ var MapContainer = module.exports = React.createClass({
 //    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 //    maxZoom: 18,
 //    id: 'mobot11.1dba3612',
-//	accessToken: config.Mapbox_token 
+//	accessToken: config.Mapbox_token
 //}).addTo(map);
 //
 //var baseMaps = {
