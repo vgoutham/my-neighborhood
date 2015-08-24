@@ -1,4 +1,6 @@
 var React = require('react');
+var request = require('superagent');
+var parseString = require('xml2js').parseString;
 
 var seattleNeighborhoods = require('../data/geojson_cleanedup.js');
 var config = require('../config.js');
@@ -74,6 +76,23 @@ var MapContainer = module.exports = React.createClass({
 
 		var zoomToFeature = function(e) {
 			map.fitBounds(e.target.getBounds());
+			var name = e.target.feature.geometry.name;
+			var zillowName = name.replace(/\s+/g, '');
+			request
+				.get('/name')
+				.end(function(err, res) {
+				if(err) {
+					console.log(err);
+				}
+				console.log(res);
+				parseString(res.text, function (err, myData) {
+					if (err) {
+						console.log(err);
+					}
+					var jsonData = JSON.stringify(myData);
+					console.log(jsonData);
+				});
+			});
 		};
 
 		var onEachFeature = function (feature, layer) {

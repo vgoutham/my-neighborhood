@@ -14,4 +14,5 @@ var App = React.createClass({
 	}
 });
 
-React.render(<App appName="MyHood" />, document.body);		
+React.render(<App appName="MyHood" />, document.body);
+
