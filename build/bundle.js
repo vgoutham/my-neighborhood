@@ -157,12 +157,9 @@ function onEachFeature(feature, layer) {
 	});
 }
 
-// this works too. add the whole array
 geojson = L.geoJson(seattleNeighborhoods, {
 	style: Style,
 	onEachFeature: onEachFeature
 }).addTo(map);
-
-
 
 },{"../data/geojson_cleanedup.js":1}]},{},[2]);
