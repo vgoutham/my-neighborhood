@@ -11,7 +11,7 @@ var baseMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
     id: 'mobot11.1dba3612',
-	accessToken: 'pk.eyJ1IjoidGFtdWxlbW9uIiwiYSI6IjNjODI3YjAxZjBjMTk2ZTg0ZDkzYzQ2ZGU2NTEyMjYzIn0.OlnNvl6bANwLeMXFWP09CQ'
+	accessToken: ''
 }).addTo(map);
 
 var baseMaps = {
