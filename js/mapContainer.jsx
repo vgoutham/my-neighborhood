@@ -77,9 +77,10 @@ var MapContainer = module.exports = React.createClass({
 		var zoomToFeature = function(e) {
 			map.fitBounds(e.target.getBounds());
 			var name = e.target.feature.geometry.name;
+			console.log(name);
 			var zillowName = name.replace(/\s+/g, '');
 			request
-				.get('/name')
+				.get('/' + zillowName)
 				.end(function(err, res) {
 				if(err) {
 					console.log(err);
