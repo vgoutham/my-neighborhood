@@ -99,7 +99,7 @@ function zoomToFeature(e) {
       if (err) {
         console.log(err);
       }
-      var jsonData = JSON.stringify(util.inspect(myData,false,null));
+      var jsonData = JSON.stringify(myData);
       console.log(jsonData);
     });
   });
