@@ -4,6 +4,8 @@ var request = require('superagent');
 var parseString = require('xml2js').parseString;
 var util = require('util');
 var ZID = require('../config.js').ZID;
+var myToken = require('../config.js').accessToken;
+
 
 
 // load a tile layer
@@ -11,7 +13,7 @@ var baseMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
     id: 'mobot11.1dba3612',
-	accessToken: ''
+	accessToken: myToken
 }).addTo(map);
 
 var baseMaps = {
@@ -71,16 +73,19 @@ function zoomToFeature(e) {
 	map.fitBounds(e.target.getBounds());
   var name = e.target.feature.geometry.name;
   var zillowName = name.replace(/\s+/g, '');
-  console.log(name);
-  var url = 'http://www.zillow.com/webservice/GetDemographics.htm?zws-id=' + ZID + '&state=WA&city=Seattle&neighborhood=' + name;
   request
-  .get(url)
+  .get('/name')
   .end(function(err, res) {
     if(err) {
       console.log(err);
     }
-   parseString(res.text, function (err, data) {
-      console.log(util.inspect(data, false, null));
+    console.log(res);
+    parseString(res.text, function (err, myData) {
+      if (err) {
+        console.log(err);
+      }
+      var jsonData = JSON.stringify(util.inspect(myData,false,null));
+      console.log(jsonData);
     });
   });
 }
