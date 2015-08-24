@@ -4,14 +4,14 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var port = process.env.port || 8080;
-
-app.use('/', express.static(path.join(__dirname, 'build')));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(express.static("__dirname" + '/build');
+
+
 app.get('', function(req, res) {
-  
+
 });
 
 
