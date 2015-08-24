@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var React = require('react');
 
 var Header = require('./header.jsx');
@@ -14,7 +13,7 @@ var App = React.createClass({
 		)
 	}
 	)}
-// =======
+
 // var map = L.map('map').setView([47.609, -122.332099], 12);
 // var seattleNeighborhoods = require('../data/geojson_cleanedup.js');
 // var request = require('superagent');
