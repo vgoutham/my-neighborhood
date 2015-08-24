@@ -7,15 +7,15 @@ var port = process.env.port || 8080;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(express.static("__dirname" + '/build');
+app.use(express.static(__dirname));
 
 
-app.get('', function(req, res) {
+// app.get('', function(req, res) {
+//
+// });
 
-});
 
 
-
-app.listen(app.get('port'), function() {
-  console.log('Server started: ' + port);
+app.listen(process.env.port || port, function() {
+  console.log('server is running on port ' + port)
 });
