@@ -17,10 +17,10 @@ var MapContainer = module.exports = React.createClass({
 	componentDidMount: function() {
 
 		var map = this.map = L.map(this.getDOMNode(), {
-			center: [47.609, -122.332099],
+			center: [47.65, -122.34],
 			zoom: 12,
-			minZoom: 1,
-			maxZoom: 20,
+			minZoom: 2,
+			maxZoom: 13,
 			layers: [
 				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -107,7 +107,7 @@ var MapContainer = module.exports = React.createClass({
 		};
 
 		var zoomToFeature = function(e) {
-			// map.fitBounds(e.target.getBounds());
+			map.fitBounds(e.target.getBounds());
 			var name = e.target.feature.geometry.name;
 			console.log(name);
 			var zillowName = name.replace(/\s+/g, '');
