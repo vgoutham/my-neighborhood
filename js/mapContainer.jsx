@@ -7,12 +7,12 @@ var config = require('../config.js');
 
 var MapContainer = module.exports = React.createClass({
 
-	// initial state is only getting data in 
+	// initial state is only getting data in
 	getInitialState: function() {
 		return {
 			neighborhoodGeoJson: seattleNeighborhoods
 		}
-	}, 
+	},
 
 	// all layers are placed on component mount
 	componentDidMount: function() {
@@ -26,7 +26,7 @@ var MapContainer = module.exports = React.createClass({
 				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 					id: 'mobot11.1dba3612',
-					accessToken: config.Mapbox_token 
+					accessToken: config.accessToken
 				})
 			],
 			attributionControl: false,
@@ -54,8 +54,19 @@ var MapContainer = module.exports = React.createClass({
 				opacity: 1,
 				color: 'grey',
 				dashArray: '3'
-			}
+			};
 		};
+   var info = L.control();
+	 info.onAdd = function(map) {
+		 this._div = L.DomUtil.create('div', 'info');
+		 this.update();
+		 return this._div;
+	 };
+
+	 info.update = function(props) {
+		 this._div.innerHTML = (props ? '<b>' + props + '</b><br />' : 'Hover over a neighborhood');
+	 };
+	 info.addTo(map);
 
 		var highlightFeature = function(e) {
 			var layer = e.target;
@@ -65,6 +76,8 @@ var MapContainer = module.exports = React.createClass({
 				dashArray: '',
 				fillOpacity: 0.7
 			});
+			info.update(layer.feature.geometry.name);
+			console.log(layer.feature.geometry.name);
 			if (!L.Browser.ie && !L.Browser.opera) {
 				layer.bringToFront();
 			}
@@ -72,6 +85,7 @@ var MapContainer = module.exports = React.createClass({
 
 		var resetHighlight = function(e) {
 			geojson.resetStyle(e.target);
+			info.update();
 		};
 
 		var zoomToFeature = function(e) {
@@ -108,7 +122,7 @@ var MapContainer = module.exports = React.createClass({
 			L.geoJson(neighborhood, {
 				style: Style(neighborhood)
 			}).addTo(map);
-		})
+		});
 
 		geojson = L.geoJson(seattleNeighborhoods, {
 			style: Style,
@@ -126,5 +140,3 @@ var MapContainer = module.exports = React.createClass({
 	}
 
 });
-
-
