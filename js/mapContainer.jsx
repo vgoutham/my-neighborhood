@@ -7,12 +7,12 @@ var config = require('../config.js');
 
 var MapContainer = module.exports = React.createClass({
 
-	// initial state is only getting data in 
+	// initial state is only getting data in
 	getInitialState: function() {
 		return {
 			neighborhoodGeoJson: seattleNeighborhoods
 		}
-	}, 
+	},
 
 	// all layers are placed on component mount
 	componentDidMount: function() {
@@ -26,7 +26,7 @@ var MapContainer = module.exports = React.createClass({
 				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 					id: 'mobot11.1dba3612',
-					accessToken: config.Mapbox_token 
+					accessToken: config.accessToken
 				})
 			],
 			attributionControl: false,
@@ -56,7 +56,16 @@ var MapContainer = module.exports = React.createClass({
 				dashArray: '3'
 			}
 		};
-
+  //  var info = L.control();
+	//  info.onAdd = function(map) {
+	// 	 this._div = L.DomUtil.create('div', 'info');
+	// 	 this.update();
+	// 	 return this._div;
+	//  }
+	//
+	//  info.update = function(props) {
+	// 	 this._div.innerHTML = '<h4>hello world' +
+	//  }
 		var highlightFeature = function(e) {
 			var layer = e.target;
 			layer.setStyle({
@@ -108,7 +117,7 @@ var MapContainer = module.exports = React.createClass({
 			L.geoJson(neighborhood, {
 				style: Style(neighborhood)
 			}).addTo(map);
-		})
+		});
 
 		geojson = L.geoJson(seattleNeighborhoods, {
 			style: Style,
@@ -126,5 +135,3 @@ var MapContainer = module.exports = React.createClass({
 	}
 
 });
-
-
