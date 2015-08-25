@@ -14,10 +14,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "body": "^5.1.0",
+    "body-parser": "^1.13.3",
     "browserify": "^11.0.1",
     "gulp": "^3.9.0",
     "gulp-react": "^3.0.1",
     "jsx-loader": "^0.13.2",
+    "parser": "^0.1.4",
     "react": "^0.13.3",
     "reactify": "^1.1.1",
     "request": "^2.61.0",

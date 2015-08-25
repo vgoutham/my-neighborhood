@@ -29,7 +29,6 @@ app.get('/:name', function(req, res) {
 });
 
 
-
 app.listen(process.env.port || port, function() {
-  console.log('server is running on port ' + port);
+  console.log('\nServer is running on port ' + port + '.....\n');
 });
