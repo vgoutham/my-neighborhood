@@ -54,18 +54,20 @@ var MapContainer = module.exports = React.createClass({
 				opacity: 1,
 				color: 'grey',
 				dashArray: '3'
-			}
+			};
 		};
-  //  var info = L.control();
-	//  info.onAdd = function(map) {
-	// 	 this._div = L.DomUtil.create('div', 'info');
-	// 	 this.update();
-	// 	 return this._div;
-	//  }
-	//
-	//  info.update = function(props) {
-	// 	 this._div.innerHTML = '<h4>hello world' +
-	//  }
+   var info = L.control();
+	 info.onAdd = function(map) {
+		 this._div = L.DomUtil.create('div', 'info');
+		 this.update();
+		 return this._div;
+	 };
+
+	 info.update = function(props) {
+		 this._div.innerHTML = (props ? '<b>' + props + '</b><br />' : 'Hover over a neighborhood')
+	 };
+	 info.addTo(map);
+
 		var highlightFeature = function(e) {
 			var layer = e.target;
 			layer.setStyle({
@@ -74,6 +76,8 @@ var MapContainer = module.exports = React.createClass({
 				dashArray: '',
 				fillOpacity: 0.7
 			});
+			info.update(layer.feature.geometry.name);
+			console.log(layer.feature.geometry.name);
 			if (!L.Browser.ie && !L.Browser.opera) {
 				layer.bringToFront();
 			}
@@ -81,6 +85,7 @@ var MapContainer = module.exports = React.createClass({
 
 		var resetHighlight = function(e) {
 			geojson.resetStyle(e.target);
+			info.update();
 		};
 
 		var zoomToFeature = function(e) {
