@@ -19,7 +19,7 @@ var MapContainer = module.exports = React.createClass({
 		var map = this.map = L.map(this.getDOMNode(), {
 			center: [47.609, -122.332099],
 			zoom: 12,
-			minZoom: 2,
+			minZoom: 1,
 			maxZoom: 20,
 			layers: [
 				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -56,7 +56,24 @@ var MapContainer = module.exports = React.createClass({
 				dashArray: '3'
 			};
 		};
+		legend = L.control({position: 'bottomright'});
+
+		legend.onAdd = function (map) {
+		    var div = L.DomUtil.create('div', 'info legend'),
+		        grades = [0, 100000, 200000, 500000, 100000, 200000, 500000, 1000000],
+		        labels = [];
+		    // loop through our density intervals and generate a label with a colored square for each interval
+				div.innerHTML = '<h6 margin="0">Median Home Prices</h6>'
+		    for (var i = 0; i < grades.length; i++) {
+		        div.innerHTML +=
+		            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+		            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+		    }
+		    return div;
+		};
+		legend.addTo(map);
 		//allows info control of the dom;
+
    var info = L.control();
 	 //when add is called, dom will create a div with id info
 	 info.onAdd = function(map) {
@@ -79,7 +96,6 @@ var MapContainer = module.exports = React.createClass({
 				fillOpacity: 0.7
 			});
 			info.update(layer.feature.geometry.name);
-			console.log(layer.feature.geometry.name);
 			if (!L.Browser.ie && !L.Browser.opera) {
 				layer.bringToFront();
 			}
@@ -91,7 +107,7 @@ var MapContainer = module.exports = React.createClass({
 		};
 
 		var zoomToFeature = function(e) {
-			map.fitBounds(e.target.getBounds());
+			// map.fitBounds(e.target.getBounds());
 			var name = e.target.feature.geometry.name;
 			console.log(name);
 			var zillowName = name.replace(/\s+/g, '');
@@ -135,7 +151,7 @@ var MapContainer = module.exports = React.createClass({
 	},
 
 	render: function() {
-		var style = {height: '60em', width: '60%', position: 'absolute', right: '5em'};
+		var style = {height: '60em', width: '70%', position: 'absolute', right: '0', top: '0'};
 		return (
 			<div style={style}></div>
 		)

@@ -3,6 +3,7 @@ var React = require('react');
 var Header = require('./header.jsx');
 MapContainer = require('./mapContainer.jsx');
 
+
 var App = React.createClass({
 	render: function() {
 		return (
@@ -14,7 +15,7 @@ var App = React.createClass({
 	}
 });
 
-React.render(<App appName="MyHood" />, document.body);
+React.render(<App appName="MyHood" />, document.getElementById('content'));
 
 function zoomToFeature(e) {
 	map.fitBounds(e.target.getBounds());
