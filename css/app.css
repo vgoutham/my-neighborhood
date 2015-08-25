@@ -1,3 +1,16 @@
 #map {
   height: 50em;
 }
+
+.info {
+    padding: 0.375em .5em;
+    font: 1.5em/2em Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 .938em rgba(0,0,0,0.2);
+    border-radius: .3em;
+}
+.info h4 {
+    margin: 0 0 .3em;
+    color: #777;
+}
