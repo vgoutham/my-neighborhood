@@ -149,12 +149,10 @@ var MapContainer = module.exports = React.createClass({
 
 
 	},
-
 	render: function() {
-		var style = {height: '60em', width: '70%', position: 'absolute', right: '0', top: '0'};
 		return (
-			<div style={style}></div>
-		)
+			<div id="mapStyle"></div>
+		);
 	}
 
 });
