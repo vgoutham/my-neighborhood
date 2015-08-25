@@ -1,16 +1,36 @@
 var React = require('react');
 var request = require('superagent');
 var parseString = require('xml2js').parseString;
-
+var ChartContainer = require('./chartContainer.jsx'); 
+		
 var seattleNeighborhoods = require('../data/geojson_cleanedup.js');
 var config = require('../config.js');
 
 var MapContainer = module.exports = React.createClass({
-
+	
+	loadAllNeighborhoods: function() {
+		request
+			.get('/neighborhoods')
+			.end(function(err, res) {
+			if (res.ok) {
+				parseString(res.text, function(err, result) {
+					var output = result['RegionChildren:regionchildren']['response'];
+//					console.log(output);
+					this.setState({
+						test: this.state.test = output
+					})
+				}.bind(this));
+			} else {
+				console.log(res.text);
+			}
+		}.bind(this));
+	},
 	// initial state is only getting data in
 	getInitialState: function() {
 		return {
-			neighborhoodGeoJson: seattleNeighborhoods
+			neighborhoodGeoJson: seattleNeighborhoods,
+			test: {},
+			neighboodDetail: {}
 		}
 	},
 
@@ -31,7 +51,13 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
-
+		
+		// get median house value in from zillows
+		this.loadAllNeighborhoods();
+			
+//		console.log(this.state.test);
+//		console.log(this.state.neighborhoodGeoJson);
+		
 		var getColor = function(m) {
 			m = parseInt(m);
 			if(m > 1000000) return '#800026';
@@ -104,11 +130,12 @@ var MapContainer = module.exports = React.createClass({
 					if (err) {
 						console.log(err);
 					}
-					var jsonData = JSON.stringify(myData);
-					console.log(jsonData);
-				});
-			});
-		};
+					this.setState({
+						neighboodDetail: this.state.neighboodDetail = myData
+						})
+					}.bind(this));
+				}.bind(this));
+			};
 
 		var onEachFeature = function (feature, layer) {
 			layer.on({
@@ -129,13 +156,19 @@ var MapContainer = module.exports = React.createClass({
 			onEachFeature: onEachFeature
 		}).addTo(map);
 
-
+		L.DomUtil.create('div', 'charContainerDiv');
 	},
 
+	
+	
 	render: function() {
-		var style = {height: '50em'};
+		console.log(this.state.neighboodDetail);
+		var style = {height: '30em'};
 		return (
-			<div style={style}></div>
+			<div>
+				<div className='map' style={style}></div>
+			<ChartContainer style={style} info={this.state.neighboodDetail} />
+			</div>
 		)
 	}
 
