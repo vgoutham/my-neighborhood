@@ -57,7 +57,7 @@ var MapContainer = module.exports = React.createClass({
 			};
 		};
 		//allows info control of the dom;
-   var info = L.control({position: 'center'});
+   var info = L.control();
 	 //when add is called, dom will create a div with id info
 	 info.onAdd = function(map) {
 		 this._div = L.DomUtil.create('div', 'info');
