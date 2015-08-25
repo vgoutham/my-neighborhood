@@ -1,7 +1,6 @@
 var React = require('react');
 var request = require('superagent');
 var parseString = require('xml2js').parseString;
-
 var seattleNeighborhoods = require('../data/geojson_cleanedup.js');
 var config = require('../config.js');
 
@@ -11,7 +10,7 @@ var MapContainer = module.exports = React.createClass({
 	getInitialState: function() {
 		return {
 			neighborhoodGeoJson: seattleNeighborhoods
-		}
+		};
 	},
 
 	// all layers are placed on component mount
@@ -31,6 +30,7 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
+
 
 		var getColor = function(m) {
 			m = parseInt(m);
@@ -56,7 +56,9 @@ var MapContainer = module.exports = React.createClass({
 				dashArray: '3'
 			};
 		};
+		//allows info control of the dom;
    var info = L.control();
+	 //when add is called, dom will create a div with id info
 	 info.onAdd = function(map) {
 		 this._div = L.DomUtil.create('div', 'info');
 		 this.update();
@@ -133,7 +135,7 @@ var MapContainer = module.exports = React.createClass({
 	},
 
 	render: function() {
-		var style = {height: '50em'};
+		var style = {height: '60em', width: '60%', position: 'absolute', right: '5em'};
 		return (
 			<div style={style}></div>
 		)
