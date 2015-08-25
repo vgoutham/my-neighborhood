@@ -64,7 +64,7 @@ var MapContainer = module.exports = React.createClass({
 	 };
 
 	 info.update = function(props) {
-		 this._div.innerHTML = (props ? '<b>' + props + '</b><br />' : 'Hover over a neighborhood')
+		 this._div.innerHTML = (props ? '<b>' + props + '</b><br />' : 'Hover over a neighborhood');
 	 };
 	 info.addTo(map);
 
