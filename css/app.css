@@ -1,108 +1,112 @@
 /***************************************************/
 html {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  overflow: auto;
+	background: #F3F7F7;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	overflow: auto;
 }
 section {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 main {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 /************ d3 chart js stuff ************/
 #chartHere {
-  width: 35%;
-  height: 100%;
-  background: #1a1a1a;
-  position: absolute;
-  top: 0;
-  right: 0%;
-  transition: .6s all ease;
-  z-index: 999;
+	width: 35%;
+	height: 98%;
+	background-color: rgba(69, 94, 99, 0.7);
+	position: absolute;
+	right: 0;
+	margin: 10px;
+	transition: .6s all ease;
+	box-shadow: 0 0 .938em rgba(0,0,0,0.7);
+	border-radius: 3px;
+	z-index: 999;
 }
 
 .graphs {
-  padding: 2em;
-  border: 1px solid #FFF;
-  display: block;
-  margin: 0 auto;
+	padding: 2em;
+	border: 1px solid #FFF;
+	display: block;
+	margin: 0 auto;
 }
 
 rect {
-  fill: rgba(70, 130, 180, .6);
-  transition: fill 0.3s ease;
+	fill: rgba(70, 130, 180, .6);
+	transition: fill 0.3s ease;
 }
 
 rect:hover {
-  fill:rgba(255,60,60,.6);
+	fill:rgba(255,60,60,.6);
 }
 
 text {
-  letter-spacing: 0;
-  fill: #FFF;
+	letter-spacing: 0;
+	fill: #FFF;
 }
 /************ leaflet map stuff ************/
 #mapStyle {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-
+	height: 95%;
+	width: 98%;
+/*	position: absolute;*/
+	margin: 20px;
+	border-color: #4D6986;
+	box-shadow: 0 0 .938em rgba(0,0,0,0.7);
+	border-radius: 3px;
 }
 
 .info {
-    padding: 0.375em .5em;
-    font: 1.5em/2em Arial, Helvetica, sans-serif;
-    background: white;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 .938em rgba(0,0,0,0.2);
-    border-radius: .3em;
+	padding: 0.375em .5em;
+	font: 1.5em/2em Arial, Helvetica, sans-serif;
+	background: white;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 .938em rgba(0,0,0,0.2);
+	border-radius: .3em;
 }
 .info h4 {
-    margin: 0 0 .3em;
-    color: #777;
+	margin: 0 0 .3em;
+	color: #777;
 }
 
 .legend {
-  font-size: 1.5em !important;
-    line-height: 1.125em;
-    color: #555;
+	font-size: 1.5em !important;
+	line-height: 1.125em;
+	color: #555;
 }
 .legend h6{
-  margin: 0;
+	margin: 0;
 }
 .legend i {
-    width: .5em;
-    height: .5em;
-    float: left;
-    margin-right: .5em;
-    opacity: 0.7;
+	width: .5em;
+	height: .5em;
+	float: left;
+	margin-right: .5em;
+	opacity: 0.7;
 }
 
 #intro {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  font-family: 'Ubuntu', sans-serif;
-  position: absolute;
-  /*right: 3.8em;*/
-  left: 67%;
-  top: 0;
-  color: white;
-  opacity: 0.8;
-  display: none !important; /*TAKE THIS OUT LATER*/
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	font-family: 'Ubuntu', sans-serif;
+	position: absolute;
+	/*right: 3.8em;*/
+	left: 67%;
+	top: 0;
+	color: white;
+	opacity: 0.8;
+	display: none !important; /*TAKE THIS OUT LATER*/
 }
 #intro h1 {
-  top: 2em;
-  margin-bottom: 0;
+	top: 2em;
+	margin-bottom: 0;
 }

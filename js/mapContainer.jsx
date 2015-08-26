@@ -55,7 +55,7 @@ var MapContainer = module.exports = React.createClass({
 		this.loadAllNeighborhoods();
 		//map layer
 		var map = this.map = L.map(this.getDOMNode(), {
-			center: [47.65, -122.34],
+			center: [47.64, -122.24],
 			zoom: 12,
 			minZoom: 2,
 			maxZoom: 13,
@@ -96,7 +96,7 @@ var MapContainer = module.exports = React.createClass({
 		};
 		
 		
-		legend = L.control({position: 'bottomright'});
+		legend = L.control({position: 'bottomleft'});
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
@@ -116,7 +116,7 @@ var MapContainer = module.exports = React.createClass({
 		legend.addTo(map);
 		
 		//allows info control of the dom;
-		var info = L.control();
+		var info = L.control({position: 'bottomleft'});
 		//when add is called, dom will create a div with id info
 		info.onAdd = function(map) {
 			this._div = L.DomUtil.create('div', 'info');
