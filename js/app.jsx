@@ -4,14 +4,12 @@ var Header = require('./header.jsx');
 var MapContainer = require('./mapContainer.jsx');
 var ChartContainer = require('./chartContainer.jsx');
 
-
 var App = React.createClass({
 	render: function() {
 		return (
 			<main>
-			<Header />
-			<MapContainer />
-			<ChartContainer />
+  			<MapContainer />
+        <ChartContainer />
 			</main>
 		)
 	}

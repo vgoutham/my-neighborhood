@@ -2,15 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>My Hood</title>
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,500italic,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
   <link rel="stylesheet" href="./css/app.css" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 </head>
 <body>
   <section id="content"></section>
-  <!-- <div id="map"></div> -->
-<!--	<script src="/js/leaflet-0.7.2/leaflet.ajax.min.js"></script>-->
+  <article id="intro">
+    <h1>myNeighborhood: </h1>
+    <p>
+      Seattle is known as a city of neighborhoods.<br> Luckily, a ton of data exists <br> about these neighborhoods. <br> However,
+      there is no good way to <br> visualize it... Until now!<br> Using myNeighborhood is easy, <br> just click on the map and
+      the data <br> will be displayed below.
+    </p>
+  </article>
+
+  <!-- <button style="display:block; position:absolute; right:0; top:0;" onClick="moveit()">BUTTONFSDFJDSA</button> -->
+
 	<script src="./build/bundle.js"></script>
+  <script>
+  function moveit() {
+    if (document.getElementById('chartHere').style.marginRight == '-35%') {
+      document.getElementById('chartHere').style.marginRight = '0px';
+    } else {
+      document.getElementById('chartHere').style.marginRight = '-35%';
+    }
+  }
+  </script>
 </body>
 </html>
