@@ -9,7 +9,6 @@ var App = React.createClass({
 		return (
 			<main>
   			<MapContainer />
-        <ChartContainer />
 			</main>
 		)
 	}
