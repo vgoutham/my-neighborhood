@@ -4,11 +4,11 @@ html {
   height: 100%;
 }
 body {
-  background: #1A1A1A;
+  background: #fff;
   width: 100%;
   height: 100%;
   margin: 0;
-  overflow: hidden;
+  overflow: auto;
 }
 section {
   width: 100%;
@@ -54,11 +54,13 @@ text {
 }
 /************ leaflet map stuff ************/
 #mapStyle {
-  height: 100%;
+  height: 95%;
   width: 65%;
-  position: absolute;
-  left: 0;
-  top: 0;
+f  position: absolute;
+	margin: 20px;
+	border-color: #4D6986;
+	box-shadow: 0 0 .938em rgba(0,0,0,0.7);
+	border-radius: 3px;
 }
 
 .info {
