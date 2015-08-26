@@ -3,12 +3,12 @@ var React = require('react');
 var ChartContainer = module.exports = React.createClass({
 
 
-
+  counter: 0,
 
   drawGraph: function(datax) {
-        console.log('draw graph invoked!!!!!');
+        console.log('draw graph invoked!!!!!', datax);
         
-        /*var ageDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[1].data[0].attribute;
+        var ageDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[1].data[0].attribute;
         //console.log(ageDistribution);
         var dataArr = [];
         for (var i = 0; i < ageDistribution.length; i++) {
@@ -47,7 +47,9 @@ var ChartContainer = module.exports = React.createClass({
           .attr('x', 0)
           .attr('y', barHeight / 2 - 5)
           .attr('dy', '.35em')
-          .text(function(d) { return d.name; });*/
+          .text(function(d) { return d.name; });
+
+        this.counter += 1;
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
         //update canvas with new random data
@@ -77,7 +79,36 @@ var ChartContainer = module.exports = React.createClass({
   },
 
 
+  updateGraph: function(datax) {
 
+      var ageDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[1].data[0].attribute;
+      //console.log(ageDistribution);
+      var dataArr = [];
+      for (var i = 0; i < ageDistribution.length; i++) {
+        dataArr.push({
+          name: ageDistribution[i].name[0],
+          val: Math.round(ageDistribution[i].value[0]._ * 100)
+        });
+      }
+      d3.transition()
+        .each(function() {
+          d3.selectAll('rect')
+            .data(dataArr)
+            .transition()
+            .duration(400)
+            .ease('linear')
+            .attr('width', function(d) { return d.val + '%'; });
+          d3.selectAll('.locVal')
+            .data(dataArr)
+            .transition()
+            .duration(400)
+            .ease('linear')
+            .attr('x', function(d) { return (d.val + .5) + '%'; })
+            .attr('y', barHeight / 2 - 5)
+            .attr('dy', '.35em')
+            .text(function(d) { return d.val + '%'; });
+        });
+  },
 
 
   // thing: function() {
@@ -89,9 +120,13 @@ var ChartContainer = module.exports = React.createClass({
 
 
   render: function() {
-    if (this.props.info) {
+    if (this.props.info && this.counter == 0) {
       console.log('child if: '+ this.props.info);
       this.drawGraph(this.props.info);
+    }
+    if (this.props.info && this.counter > 0) {
+      console.log('child if: '+ this.props.info);
+      this.updateGraph(this.props.info);
     }
 		return (
       <section id='chartHere'>TEST</section>

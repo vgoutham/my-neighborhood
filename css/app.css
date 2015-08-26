@@ -23,10 +23,12 @@ main {
 #chartHere {
   width: 35%;
   height: 100%;
+  background: #1a1a1a;
   position: absolute;
   top: 0;
   right: 0%;
   transition: .6s all ease;
+  z-index: 999;
 }
 
 .graphs {
@@ -52,7 +54,7 @@ text {
 /************ leaflet map stuff ************/
 #mapStyle {
   height: 100%;
-  width: 65%;
+  width: 100%;
   position: absolute;
   left: 0;
   top: 0;
