@@ -6,7 +6,7 @@ var ChartContainer = require('./chartContainer.jsx');
 var config = require('../config.js');
 
 var MapContainer = module.exports = React.createClass({
-	
+
 	//load house median from zillows
 	loadAllNeighborhoods: function() {
 		request
@@ -25,7 +25,7 @@ var MapContainer = module.exports = React.createClass({
 			}
 		}.bind(this));
 	},
-	
+
 	// initial state. set geojson
 	getInitialState: function() {
 		return {
@@ -52,10 +52,10 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
-		
+
 		//load median house price
 		this.loadAllNeighborhoods();
-		
+
 		//add style to tiles
 		var getColor = function(m) {
 			m = parseInt(m);
@@ -111,7 +111,7 @@ var MapContainer = module.exports = React.createClass({
 			this._div.innerHTML = (props ? '<b>' + props + '</b><br />' : 'Hover over a neighborhood');
 		};
 		info.addTo(map);
-		
+
 		//add event listeners
 		var highlightFeature = function(e) {
 			var layer = e.target;
@@ -141,23 +141,18 @@ var MapContainer = module.exports = React.createClass({
 				.get('/' + zillowName)
 				.end(function(err, res) {
 				if (res.ok) {
-//					console.log('res.text',res.text);
 					parseString(res.text, function(err, result) {
-//						console.log(this.state.neighborhoodDetail);
-//						console.log('result', result);
-//						var output = result['Demographics:demographics']['response'];
 						this.setState({
 							neighborhoodDetail: result
 						})
 					}.bind(this));
-//					console.log(this.state.neighborhoodDetail);
 				} else {
 					console.log(res.text);
 				}
 			}.bind(this));
 		}.bind(this);
 
-					
+
 		var onEachFeature = function (feature, layer) {
 			layer.on({
 				mouseover: highlightFeature,
@@ -165,7 +160,7 @@ var MapContainer = module.exports = React.createClass({
 				click: zoomToFeature // need to add http call here
 			});
 		};
-		
+
 		//add style layer
 		var geojson = this.state.neighborhoodGeoJson.map(function(neighborhood) {
 			L.geoJson(neighborhood, {
@@ -181,9 +176,13 @@ var MapContainer = module.exports = React.createClass({
 	},
 
 	render: function() {
+		console.log('info on parent', this.state.neighborhoodDetail);
+		
 		return (
-			<div id="mapStyle"></div>
-		);
+			<div id="mapStyle">
+				<ChartContainer info={this.state.neighborhoodDetail} />
+			</div>
+		)
 	}
 
 });
