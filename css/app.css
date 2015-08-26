@@ -56,7 +56,7 @@ text {
 #mapStyle {
   height: 95%;
   width: 65%;
-f  position: absolute;
+	position: absolute;
 	margin: 20px;
 	border-color: #4D6986;
 	box-shadow: 0 0 .938em rgba(0,0,0,0.7);
