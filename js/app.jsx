@@ -9,12 +9,10 @@ var App = React.createClass({
 		return (
 			<main>
   			<MapContainer />
-//        <ChartContainer />
+        <ChartContainer />
 			</main>
 		)
 	}
 });
 
 React.render(<App appName="MyHood" />, document.getElementById('content'));
-
-
