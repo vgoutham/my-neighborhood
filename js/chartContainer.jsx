@@ -5,9 +5,9 @@ var ChartContainer = module.exports = React.createClass({
 
 
 
-  drawGraph: function() {
+  drawGraph: function(datax) {
         console.log('draw graph invoked!!!!!');
-        document.getElementById('chartHere').innerHTML = 'hello world!!';
+        
         /*var ageDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[1].data[0].attribute;
         //console.log(ageDistribution);
         var dataArr = [];
@@ -91,7 +91,7 @@ var ChartContainer = module.exports = React.createClass({
   render: function() {
     if (this.props.info) {
       console.log('child if: '+ this.props.info);
-      this.drawGraph();
+      this.drawGraph(this.props.info);
     }
 		return (
       <section id='chartHere'>TEST</section>
