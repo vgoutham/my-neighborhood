@@ -2,20 +2,42 @@ var React = require('react');
 var request = require('superagent');
 var parseString = require('xml2js').parseString;
 var seattleNeighborhoods = require('../data/geojson_cleanedup.js');
+var ChartContainer = require('./chartContainer.jsx');
 var config = require('../config.js');
 
 var MapContainer = module.exports = React.createClass({
-
-	// initial state is only getting data in
+	
+	//load house median from zillows
+	loadAllNeighborhoods: function() {
+		request
+			.get('/neighborhoods')
+			.end(function(err, res) {
+			if (res.ok) {
+				parseString(res.text, function(err, result) {
+					var output = result['RegionChildren:regionchildren']['response'];
+					//					console.log(output);
+					this.setState({
+						test: this.state.test = output
+					})
+				}.bind(this));
+			} else {
+				console.log(res.text);
+			}
+		}.bind(this));
+	},
+	
+	// initial state. set geojson
 	getInitialState: function() {
 		return {
-			neighborhoodGeoJson: seattleNeighborhoods
+			neighborhoodGeoJson: seattleNeighborhoods,
+			test: {},
+			neighborhoodDetail: ''
 		};
 	},
 
-	// all layers are placed on component mount
+	// all layers are placed when component is mounted
 	componentDidMount: function() {
-
+		//map layer
 		var map = this.map = L.map(this.getDOMNode(), {
 			center: [47.609, -122.332099],
 			zoom: 12,
@@ -30,12 +52,15 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
-
-
+		
+		//load median house price
+		this.loadAllNeighborhoods();
+		
+		//add style to tiles
 		var getColor = function(m) {
 			m = parseInt(m);
 			if(m > 1000000) return '#800026';
-			else if(m > 6000000)  return '#BD0026';
+			else if(m > 600000)  return '#BD0026';
 			else if(m > 500000)  return '#E31A1C';
 			else if(m > 400000)  return '#FC4E2A';
 			else if(m > 300000)  return '#FD8D3C';
@@ -60,7 +85,7 @@ var MapContainer = module.exports = React.createClass({
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
-					grades = [0, 100000, 200000, 500000, 100000, 200000, 500000, 1000000],
+					grades = [0, 100000, 200000, 300000, 400000, 500000, 600000, 1000000],
 					labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
 			div.innerHTML = '<h6 margin="0">Median Home Prices</h6>'
@@ -86,7 +111,8 @@ var MapContainer = module.exports = React.createClass({
 			this._div.innerHTML = (props ? '<b>' + props + '</b><br />' : 'Hover over a neighborhood');
 		};
 		info.addTo(map);
-
+		
+		//add event listeners
 		var highlightFeature = function(e) {
 			var layer = e.target;
 			layer.setStyle({
@@ -114,20 +140,24 @@ var MapContainer = module.exports = React.createClass({
 			request
 				.get('/' + zillowName)
 				.end(function(err, res) {
-				if(err) {
-					console.log(err);
+				if (res.ok) {
+//					console.log('res.text',res.text);
+					parseString(res.text, function(err, result) {
+//						console.log(this.state.neighborhoodDetail);
+//						console.log('result', result);
+//						var output = result['Demographics:demographics']['response'];
+						this.setState({
+							neighborhoodDetail: result
+						})
+					}.bind(this));
+//					console.log(this.state.neighborhoodDetail);
+				} else {
+					console.log(res.text);
 				}
-				console.log(res);
-				parseString(res.text, function (err, myData) {
-					if (err) {
-						console.log(err);
-					}
-					var jsonData = JSON.stringify(myData);
-					console.log(jsonData);
-				});
-			});
-		};
+			}.bind(this));
+		}.bind(this);
 
+					
 		var onEachFeature = function (feature, layer) {
 			layer.on({
 				mouseover: highlightFeature,
@@ -135,7 +165,8 @@ var MapContainer = module.exports = React.createClass({
 				click: zoomToFeature // need to add http call here
 			});
 		};
-
+		
+		//add style layer
 		var geojson = this.state.neighborhoodGeoJson.map(function(neighborhood) {
 			L.geoJson(neighborhood, {
 				style: Style(neighborhood)
@@ -147,13 +178,16 @@ var MapContainer = module.exports = React.createClass({
 			onEachFeature: onEachFeature
 		}).addTo(map);
 
-
 	},
-
+	
 	render: function() {
-		var style = {height: '60em', width: '70%', position: 'absolute', right: '0', top: '0'};
+//		console.log('what I need', this.state.neighborhoodDetail);
+		var style = {height: '60em', width: '70%', position:'absolute', right: '0', top: '0'};
+		var style2 = {height: '20em'};
 		return (
-			<div style={style}></div>
+			<div style={style}>
+			<ChartContainer style={style2} info={this.state.neighborhoodDetail} />
+			</div>
 		)
 	}
 

@@ -35,7 +35,7 @@ app.get('/:name', function(req, res) {
   .get(url)
   .end(function(err,data) {
     if (err) {
-      console.log(err);
+      console.log('err', err);
     }
     res.send(data.text);
   });

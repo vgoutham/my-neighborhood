@@ -1,7 +1,8 @@
 var React = require('react');
 
 var Header = require('./header.jsx');
-MapContainer = require('./mapContainer.jsx');
+var MapContainer = require('./mapContainer.jsx');
+var ChartContainer = require('./chartContainer.jsx');
 
 
 var App = React.createClass({
@@ -10,6 +11,7 @@ var App = React.createClass({
 			<main>
 			<Header />
 			<MapContainer />
+			<ChartContainer />
 			</main>
 		)
 	}
