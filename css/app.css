@@ -4,7 +4,7 @@ html {
   height: 100%;
 }
 body {
-  background: #1A1A1A;
+  background: #fff;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -23,13 +23,12 @@ main {
 #chartHere {
   width: 35%;
   height: 100%;
+  background: #1a1a1a;
   position: absolute;
   top: 0;
   right: 0%;
-  margin-right: -35%;
   transition: .6s all ease;
-  background-image: url('https://pando-assets.s3.amazonaws.com/uploads/2013/10/big-data-darpa.jpg');
-  background-size: cover;
+  z-index: 999;
 }
 
 .graphs {
@@ -55,7 +54,7 @@ text {
 /************ leaflet map stuff ************/
 #mapStyle {
   height: 100%;
-  width: 65%;
+  width: 100%;
   position: absolute;
   left: 0;
   top: 0;
@@ -101,6 +100,7 @@ text {
   top: 0;
   color: white;
   opacity: 0.8;
+  display: none !important; /*TAKE THIS OUT LATER*/
 }
 #intro h1 {
   top: 2em;
