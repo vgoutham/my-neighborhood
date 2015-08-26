@@ -9,7 +9,6 @@ var MapContainer = module.exports = React.createClass({
 
 //	load house median from zillows
 	loadAllNeighborhoods: function() {
-//		console.log('envoked');
 		request
 			.get('/neighborhoods')
 			.end(function(err, res) {
@@ -26,7 +25,6 @@ var MapContainer = module.exports = React.createClass({
 						} else {
 							median = null;
 						}
-//						console.log(name, median);
 						medianObj[name] = median;
 					}
 					for (var i  = 0; i < seattleNeighborhoods.length; i++) {
@@ -35,8 +33,6 @@ var MapContainer = module.exports = React.createClass({
 					this.setState({
 						neighborhoodGeoJson: seattleNeighborhoods
 					})
-//					this.resetStyle(Style, onEachFeature);
-//					console.log('this.state.neighborhoodGeoJon', this.state.neighborhoodGeoJson[0]);
 				}.bind(this));
 			} else {
 				console.log(res.text);
@@ -55,7 +51,7 @@ var MapContainer = module.exports = React.createClass({
 	// all layers are placed when component is mounted
 	componentDidMount: function() {
 		
-		//load midian 
+		//load midian from zillows and synthesize the genojson
 		this.loadAllNeighborhoods();
 		//map layer
 		var map = this.map = L.map(this.getDOMNode(), {
@@ -118,8 +114,8 @@ var MapContainer = module.exports = React.createClass({
 			return div;
 		};
 		legend.addTo(map);
+		
 		//allows info control of the dom;
-
 		var info = L.control();
 		//when add is called, dom will create a div with id info
 		info.onAdd = function(map) {
@@ -133,25 +129,22 @@ var MapContainer = module.exports = React.createClass({
 		};
 		info.addTo(map);
 
-		
-	
-
-//		add style layer and event listener
+//		add style layer and event listener. delay loading until data is ready
 		setTimeout(function(){
-			console.log('this.state.neighborhoodGeoJon', this.state.neighborhoodGeoJson[0]);
-				var highlightFeature = function(e) {
-			var layer = e.target;
-			layer.setStyle({
-				weight: 3,
-				color: '#fff',
-				dashArray: '',
-				fillOpacity: 0.7
-			});
-			info.update(layer.feature.geometry.name);
-			if (!L.Browser.ie && !L.Browser.opera) {
-				layer.bringToFront();
-			}
-		};
+//			console.log('this.state.neighborhoodGeoJon', this.state.neighborhoodGeoJson[0]);
+			var highlightFeature = function(e) {
+					var layer = e.target;
+					layer.setStyle({
+						weight: 3,
+						color: '#fff',
+						dashArray: '',
+						fillOpacity: 0.7
+					});
+					info.update(layer.feature.geometry.name);
+					if (!L.Browser.ie && !L.Browser.opera) {
+						layer.bringToFront();
+					}
+			};
 
 		var resetHighlight = function(e) {
 			geojson.resetStyle(e.target);
@@ -160,6 +153,7 @@ var MapContainer = module.exports = React.createClass({
 
 		var zoomToFeature = function(e) {
 			map.fitBounds(e.target.getBounds());
+			highlightFeature(e);
 			var name = e.target.feature.geometry.name;
 			console.log(name);
 			var zillowName = name.replace(/\s+/g, '');
@@ -181,11 +175,14 @@ var MapContainer = module.exports = React.createClass({
 
 		var onEachFeature = function (feature, layer) {
 			layer.on({
+				click: zoomToFeature 
+			});
+			layer.on({
 				mouseover: highlightFeature,
 				mouseout: resetHighlight,
-				click: zoomToFeature // need to add http call here
 			});
 		};
+			
 			var geojson = this.state.neighborhoodGeoJson.map(function(neighborhood) {
 				L.geoJson(neighborhood, {
 					style: Style(neighborhood)
