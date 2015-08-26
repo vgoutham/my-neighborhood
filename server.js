@@ -14,6 +14,19 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(__dirname));
 
+app.get('/neighborhoods', function(req, res) {
+	var url = 'http://www.zillow.com/webservice/GetRegionChildren.htm?zws-id=' + ZID + '&state=wa&city=seattle&childtype=neighborhood';
+	request
+		.get(url)
+		.end(function(err, data) {
+			if (err) {
+				console.log(err);
+			} else {
+//				console.log(data.text);
+				res.send(data.text);
+			}
+		})
+});
 
 app.get('/:name', function(req, res) {
   var name = req.params.name;
@@ -22,7 +35,7 @@ app.get('/:name', function(req, res) {
   .get(url)
   .end(function(err,data) {
     if (err) {
-      console.log(err);
+      console.log('err', err);
     }
     res.send(data.text);
   });
