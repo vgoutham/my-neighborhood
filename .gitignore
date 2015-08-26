@@ -1,6 +1,5 @@
 .DS_Store
 node_modules/
 config.js
-.DS_Store
 build/
 build/bundle.js
