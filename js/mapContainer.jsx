@@ -4,6 +4,7 @@ var parseString = require('xml2js').parseString;
 var seattleNeighborhoods = require('../data/geojson_cleanedup_remove_median.js');
 var ChartContainer = require('./chartContainer.jsx');
 var config = require('../config.js');
+var murderData = require('../data/seattle_homicide_data.js');
 
 var MapContainer = module.exports = React.createClass({
 
@@ -16,7 +17,7 @@ var MapContainer = module.exports = React.createClass({
 			if (res.ok) {
 				parseString(res.text, function(err, result) {
 					var outputArr = result['RegionChildren:regionchildren']['response'][0]['list'][0]['region'];
-					var medianObj = {}, 
+					var medianObj = {},
 							name = '',
 							median = null;
 					for(var j = 0; j < outputArr.length; j++) {
@@ -43,7 +44,7 @@ var MapContainer = module.exports = React.createClass({
 			}
 		}.bind(this));
 	},
-																							 
+
 //	 initial state. set geojson
 	getInitialState: function() {
 		return {
@@ -54,8 +55,8 @@ var MapContainer = module.exports = React.createClass({
 
 	// all layers are placed when component is mounted
 	componentDidMount: function() {
-		
-		//load midian 
+
+		//load midian
 		this.loadAllNeighborhoods();
 		//map layer
 		var map = this.map = L.map(this.getDOMNode(), {
@@ -72,6 +73,18 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
+
+//adding markers to map;
+
+  // murderData.map(function(arr) {
+  //   L.marker(arr).addTo(map);
+	// });
+
+	L.easyButton('Crime Button', function (btn, map) {
+		murderData.map(function(arr) {
+			L.marker(arr).addTo(map);
+		});
+	}).addTo(map);
 
 		//add style to tiles
 		var getColor = function(m) {
@@ -98,8 +111,7 @@ var MapContainer = module.exports = React.createClass({
 				dashArray: '3'
 			};
 		};
-		
-		
+
 		legend = L.control({position: 'bottomright'});
 
 		legend.onAdd = function (map) {
@@ -133,8 +145,8 @@ var MapContainer = module.exports = React.createClass({
 		};
 		info.addTo(map);
 
-		
-	
+
+
 
 //		add style layer and event listener
 		setTimeout(function(){
@@ -196,13 +208,13 @@ var MapContainer = module.exports = React.createClass({
 				style: Style,
 				onEachFeature: onEachFeature
 			}).addTo(map);
-		
+
 		}.bind(this), 300)
-	
+
 
 	},
 
-	render: function() {	
+	render: function() {
 		return (
 			<div id="mapStyle">
 				<ChartContainer info={this.state.neighborhoodDetail} />
