@@ -5,6 +5,7 @@ var seattleNeighborhoods = require('../data/geojson_cleanedup_remove_median.js')
 var ChartContainer = require('./chartContainer.jsx');
 var config = require('../config.js');
 var murderData = require('../data/seattle_homicide_data.js');
+var easyButton = require('../Leaflet.EasyButton/src/easy-button.js');
 
 var MapContainer = module.exports = React.createClass({
 
@@ -74,17 +75,30 @@ var MapContainer = module.exports = React.createClass({
 			attributionControl: false,
 		});
 
-//adding markers to map;
 
-  // murderData.map(function(arr) {
-  //   L.marker(arr).addTo(map);
-	// });
 
-	L.easyButton('Crime Button', function (btn, map) {
-		murderData.map(function(arr) {
-			L.marker(arr).addTo(map);
-		});
-	}).addTo(map);
+var crimeEvent = document.getElementById('crimeButton');
+crimeEvent.addEventListener('click', clickHandler, false);
+var murderMarkers = murderData.map(function(arr) {
+	return	L.marker(arr).bindPopup("Homicide");
+});
+
+var clicked = false;
+var mapMarkers = L.featureGroup(murderMarkers);
+	function clickHandler() {
+		var btn = document.getElementById('crimeButton');
+		if (clicked === false) {
+		map.addLayer(mapMarkers);
+		btn.innerHTML = 'Hide Seattle Homicides';
+		clicked = true;
+	}
+	else {
+		console.log(mapMarkers);
+		map.removeLayer(mapMarkers);
+		btn.innerHTML = 'Show Seattle Homicides';
+		clicked = false;
+	 }
+	}
 
 		//add style to tiles
 		var getColor = function(m) {
