@@ -129,13 +129,14 @@ footer {
 }
 
 .attribution {
+	padding-top: 0;
 	font-size: 0.8em;
 	text-align: center;
 	color: #506C89 ;
 	background: rgba(194, 214, 214, 0.5);
 }
 .attribution a {
-	color:floralwhite;
+	color: #E6E6E6;
 }
 
 .info {

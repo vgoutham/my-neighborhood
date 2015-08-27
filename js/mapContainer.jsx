@@ -235,7 +235,7 @@ var MapContainer = module.exports = React.createClass({
 				selected = layer;
 				layer.setStyle({
 					weight: 3,
-					color: '#24476B ',
+					color: '#FFFF00 ',
 					dashArray: '',
 					fillOpacity: 0.7
 				});
