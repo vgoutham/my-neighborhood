@@ -72,24 +72,75 @@ text {
 	fill: #FFF;
 }
 
+
 /************ header ************/
 header {
+/*	text-align: center;*/
 	background: #1a1a1a;
+
 	height: 65px;
 	width: 100%;
 	position: absolute;
-	top: 0;
 	text-align: center;
-	color: #fff;
+	color: #8FB2B2;
 }
+
+header article {
+	font-family: sans-serif;
+	font-size: 35px;
+	padding-top: 10px;
+	display: inline-block;
+}
+
+header ul {
+	padding-right: 10px;
+	float: right;
+	list-style-type: none;
+}
+
+header ul li {
+	font-size: 10px;
+	padding-right: 10px;
+	color: #C2D6D6;
+	display: inline-block;
+}
+
+header ul img {
+/*	padding-top: -25px;*/
+	height: 35px;
+}
+/************ footer ************/
+/*
+footer {
+	width: 100%
+	position: absolute;
+	background: #1a1a1a;
+	height: 50px;
+	padding-top: 690px;
+	bottom : 0;
+	text: #fff;
+}
+*/
+
 
 /************ leaflet map stuff ************/
 #mapStyle {
-	height: calc(100% - 65px);
+	height: calc(100% - 115px);
 	width: 100%;
 	position: absolute;
-	bottom: -65px;
+	bottom: -50px;
 	overflow: hidden;
+}
+
+.attribution {
+	padding-top: 0;
+	font-size: 0.8em;
+	text-align: center;
+	color: #506C89 ;
+	background: rgba(194, 214, 214, 0.5);
+}
+.attribution a {
+	color: #E6E6E6;
 }
 
 .info {
@@ -110,8 +161,8 @@ header {
 	line-height: 1.125em;
 	color: #555;
 }
-.legend h6{
-	margin: 0;
+.legend h5{
+	margin: 0.2em;
 }
 .legend i {
 	width: .5em;
