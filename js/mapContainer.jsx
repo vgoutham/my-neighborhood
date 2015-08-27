@@ -2,8 +2,10 @@ var React = require('react');
 var request = require('superagent');
 var parseString = require('xml2js').parseString;
 var seattleNeighborhoods = require('../data/geojson_cleanedup_remove_median.js');
-var ChartContainer = require('./chartContainer.jsx');
 var config = require('../config.js');
+
+var AgeChart = require('./ageChart.jsx');
+var MedianChart = require('./medianChart.jsx');
 
 var MapContainer = module.exports = React.createClass({
 
@@ -194,7 +196,7 @@ var MapContainer = module.exports = React.createClass({
 				onEachFeature: onEachFeature
 			}).addTo(map);
 		
-		}.bind(this), 300)
+		}.bind(this), 1000)
 	
 
 	},
@@ -202,7 +204,10 @@ var MapContainer = module.exports = React.createClass({
 	render: function() {	
 		return (
 			<div id="mapStyle">
-				<ChartContainer info={this.state.neighborhoodDetail} />
+				<div id='sidebar'>
+					<AgeChart info={this.state.neighborhoodDetail} />
+					<MedianChart info={this.state.neighborhoodDetail} />
+				</div>
 			</div>
 		)
 	}

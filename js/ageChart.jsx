@@ -1,11 +1,10 @@
 var React = require('react');
-var d3 = require('d3');
 
 var AgeDonut = module.exports = React.createClass({
 
-  componentDidMount: function() {
+  drawGraph: function(datax) {
 
-    var nameDemographics = this.props.neighborhoodDetail['Demographics:demographics'].response[0].pnames[0].pname[2].tables[0].table[1].data[0].attribute;
+    var nameDemographics = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[1].data[0].attribute;
 
     var data = [];
     for (var i = 0; i < nameDemographics.length; i++) {
@@ -30,7 +29,8 @@ var AgeDonut = module.exports = React.createClass({
         .sort(null)
         .value(function(d) { return d.val; });
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#agedonut")
+        .append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
@@ -56,10 +56,12 @@ var AgeDonut = module.exports = React.createClass({
         .text(function(d) { return d.data.name; });
   },
   render: function() {
+    if (this.props.info) {
+      console.log(this.props.info);
+      this.drawGraph(this.props.info);
+    }
     return(
-      <div>
-        <AgeDonut />
-      </div>
+      <div id='agedonut'></div>
     );
   }
 });

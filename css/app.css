@@ -20,17 +20,18 @@ main {
 }
 
 /************ d3 chart js stuff ************/
-#chartHere {
+#sidebar {
 	width: 35%;
-	height: 98%;
+	height: 100%;
 	background-color: rgba(69, 94, 99, 0.7);
 	position: absolute;
 	right: 0;
-	margin: 10px;
 	transition: .6s all ease;
-	box-shadow: 0 0 .938em rgba(0,0,0,0.7);
-	border-radius: 3px;
 	z-index: 999;
+}
+
+#chartHere:hover {
+	width: 50%;
 }
 
 .graphs {
@@ -55,13 +56,9 @@ text {
 }
 /************ leaflet map stuff ************/
 #mapStyle {
-	height: 95%;
-	width: 98%;
-/*	position: absolute;*/
-	margin: 20px;
-	border-color: #4D6986;
-	box-shadow: 0 0 .938em rgba(0,0,0,0.7);
-	border-radius: 3px;
+	height: 100%;
+	width: 100%;
+	position: absolute;
 }
 
 .info {
