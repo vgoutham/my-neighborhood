@@ -1,13 +1,11 @@
 var React = require('react');
 
-var ChartContainer = module.exports = React.createClass({
+var MedianChart = module.exports = React.createClass({
 
 
   counter: 0,
 
   drawGraph: function(datax) {
-//        console.log('draw graph invoked!!!!!', datax);
-        
         var ageDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[1].data[0].attribute;
         //console.log(ageDistribution);
         var dataArr = [];
@@ -20,7 +18,7 @@ var ChartContainer = module.exports = React.createClass({
         ////////////////////////////////////////////////////////////////////////////////////////////////
         //draw initial canvas
         var barHeight = 50;
-        var canvas = d3.select('#chartHere')
+        var canvas = d3.select('#medianChart')
           .append('svg')
           .attr('class', 'graphs')
           .attr('width', 80 + '%')
@@ -50,32 +48,7 @@ var ChartContainer = module.exports = React.createClass({
           .text(function(d) { return d.name; });
 
         this.counter += 1;
-        ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //update canvas with new random data
-        // function newData() {
-        //   for (var i = 0; i < dataArr.length; i++) {
-        //     dataArr[i].val = Math.floor(Math.random() * 50);
-        //   }
-        //   d3.transition()
-        //     .each(function() {
-        //       d3.selectAll('rect')
-        //         .data(dataArr)
-        //         .transition()
-        //         .duration(400)
-        //         .ease('linear')
-        //         .attr('width', function(d) { return d.val + '%'; });
-        //       d3.selectAll('.locVal')
-        //         .data(dataArr)
-        //         .transition()
-        //         .duration(400)
-        //         .ease('linear')
-        //         .attr('x', function(d) { return (d.val + .5) + '%'; })
-        //         .attr('y', barHeight / 2 - 5)
-        //         .attr('dy', '.35em')
-        //         .text(function(d) { return d.val + '%'; });
-        //     });
-        //   }
   },
 
 
@@ -90,6 +63,7 @@ var ChartContainer = module.exports = React.createClass({
           val: Math.round(ageDistribution[i].value[0]._ * 100)
         });
       }
+      var barHeight = 50;
       d3.transition()
         .each(function() {
           d3.selectAll('rect')
@@ -129,7 +103,7 @@ var ChartContainer = module.exports = React.createClass({
       this.updateGraph(this.props.info);
     }
 		return (
-      <section id='chartHere'>TEST</section>
+      <article id='medianChart'></article>
     );
   }
 });
