@@ -69,11 +69,6 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
-		<<<<<<< HEAD
-
-			=======
-
-
 
 			var crimeEvent = document.getElementById('crimeButton');
 		crimeEvent.addEventListener('click', clickHandler, false);
@@ -98,7 +93,6 @@ var MapContainer = module.exports = React.createClass({
 			}
 		}
 
-		>>>>>>> master
 		//add style to tiles
 		var getColor = function(m) {
 			m = parseInt(m);
@@ -166,6 +160,7 @@ var MapContainer = module.exports = React.createClass({
 			var selected;
 			var previousSelected;
 
+
 			//			console.log('this.state.neighborhoodGeoJon', this.state.neighborhoodGeoJson[0]);
 			var hoverOverStyle = function(e) {
 				var layer = e.target;
@@ -174,13 +169,11 @@ var MapContainer = module.exports = React.createClass({
 						weight: 3,
 						color: '#fff',
 						dashArray: '',
-						fillOpacity: 0.7
+						fillOpacity: 0.8
 					});
 				}
+				layer.bringToFront();
 				info.update(layer.feature.geometry.name);
-				if (!L.Browser.ie && !L.Browser.opera) {
-					layer.bringToFront();
-				}
 			};
 
 			var resetHighlight = function(e) {
@@ -203,9 +196,10 @@ var MapContainer = module.exports = React.createClass({
 				layer.setStyle({
 					weight: 3,
 					color: '#24476B ',
-					dashArray: '',
-					fillOpacity: 0.7
+					dashArray: '2',
+					zIndex: 1000
 				});
+				
 			};
 
 			var zoomToFeature = function(e) {
