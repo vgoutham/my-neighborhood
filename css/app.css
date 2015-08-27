@@ -36,6 +36,10 @@ main {
 	margin: 0 auto;
 }
 
+.arc:hover {
+    opacity: .75;
+}
+
 rect {
 	fill: rgba(70, 130, 180, .6);
 	transition: fill 0.3s ease;
