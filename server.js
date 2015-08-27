@@ -3,7 +3,7 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var port = process.env.port || 3000;
+var PORT = process.env.PORT || 3000;
 var ZID = require('./config.js').ZID;
 var parseString = require('xml2js').parseString;
 var util = require('util');
@@ -41,6 +41,6 @@ app.get('/:name', function(req, res) {
 });
 
 
-app.listen(process.env.port || port, function() {
-  console.log('\nServer is running on port ' + port + '.....\n');
+app.listen(PORT, function() {
+  console.log('\nServer is running on port ' + PORT + '.....\n');
 });
