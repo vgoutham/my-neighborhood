@@ -57,7 +57,7 @@ var MapContainer = module.exports = React.createClass({
 		this.loadAllNeighborhoods();
 		//map layer
 		var map = this.map = L.map(this.getDOMNode(), {
-			center: [47.64, -122.24],
+			center: [47.609, -122.332099],
 			zoom: 12,
 			minZoom: 2,
 			maxZoom: 13,
