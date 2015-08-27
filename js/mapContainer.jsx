@@ -7,6 +7,7 @@ var murderData = require('../data/seattle_homicide_data.js');
 var easyButton = require('../Leaflet.EasyButton/src/easy-button.js');
 var MedianChart = require('./medianChart.jsx');
 var AgeChart = require('./ageChart.jsx');
+var parkData = require('../data/seattle_park_data.js');
 
 var MapContainer = module.exports = React.createClass({
 
@@ -70,26 +71,58 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
-		var crimeEvent = document.getElementById('crimeButton');
-		crimeEvent.addEventListener('click', clickHandler, false);
+//adding park markers
+
+		var parkMarkers = parkData.map(function(arr) {
+			return L.marker([arr[1], arr[0]]).bindPopup(arr[2]);
+		});
+
+  	var newMarkers = L.featureGroup(parkMarkers);
+
+    var parkEvent = document.getElementById('parkButton');
+
+    parkEvent.addEventListener('click', parkClickHandler, false);
+
+    var parkClicked = false;
+
+		function parkClickHandler() {
+			var parkBtn = document.getElementById('parkButton');
+			if(!parkClicked) {
+				map.addLayer(newMarkers);
+				parkBtn.innerHTML = 'Hide Seattle Parks';
+				parkClicked = true;
+			}
+			else {
+				map.removeLayer(newMarkers);
+				parkBtn.innerHTML = 'Show Seattle Parks';
+				parkClicked = false;
+			}
+		}
+
+//crime button and crime marker functionality
 		var murderMarkers = murderData.map(function(arr) {
 			return	L.marker(arr).bindPopup("Homicide");
 		});
 
-		var clicked = false;
 		var mapMarkers = L.featureGroup(murderMarkers);
+
+		var crimeEvent = document.getElementById('crimeButton');
+
+		crimeEvent.addEventListener('click', clickHandler, false);
+
+		var murderClicked = false;
+
 		function clickHandler() {
 			var btn = document.getElementById('crimeButton');
-			if (clicked === false) {
+			if (murderClicked === false) {
 				map.addLayer(mapMarkers);
 				btn.innerHTML = 'Hide Seattle Homicides';
-				clicked = true;
+				murderClicked = true;
 			}
 			else {
-				console.log(mapMarkers);
 				map.removeLayer(mapMarkers);
 				btn.innerHTML = 'Show Seattle Homicides';
-				clicked = false;
+				murderClicked = false;
 			}
 		}
 
