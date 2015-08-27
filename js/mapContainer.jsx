@@ -69,10 +69,13 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
+		<<<<<<< HEAD
+
+			=======
 
 
 
-		var crimeEvent = document.getElementById('crimeButton');
+			var crimeEvent = document.getElementById('crimeButton');
 		crimeEvent.addEventListener('click', clickHandler, false);
 		var murderMarkers = murderData.map(function(arr) {
 			return	L.marker(arr).bindPopup("Homicide");
@@ -95,6 +98,7 @@ var MapContainer = module.exports = React.createClass({
 			}
 		}
 
+		>>>>>>> master
 		//add style to tiles
 		var getColor = function(m) {
 			m = parseInt(m);
@@ -158,15 +162,21 @@ var MapContainer = module.exports = React.createClass({
 		//		add style layer and event listener. delay loading until data is ready
 
 		setTimeout(function(){
+
+			var selected;
+			var previousSelected;
+
 			//			console.log('this.state.neighborhoodGeoJon', this.state.neighborhoodGeoJson[0]);
-			var highlightFeature = function(e) {
+			var hoverOverStyle = function(e) {
 				var layer = e.target;
-				layer.setStyle({
-					weight: 3,
-					color: '#fff',
-					dashArray: '',
-					fillOpacity: 0.7
-				});
+				if (!selected || layer._leaflet_id !== selected._leaflet_id) {
+					layer.setStyle({
+						weight: 3,
+						color: '#fff',
+						dashArray: '',
+						fillOpacity: 0.7
+					});
+				}
 				info.update(layer.feature.geometry.name);
 				if (!L.Browser.ie && !L.Browser.opera) {
 					layer.bringToFront();
@@ -174,13 +184,33 @@ var MapContainer = module.exports = React.createClass({
 			};
 
 			var resetHighlight = function(e) {
-				geojson.resetStyle(e.target);
+				var layer = e.target;
+				if (!selected || layer._leaflet_id !== selected._leaflet_id) {
+					geojson.resetStyle(layer);
+				}
 				info.update();
+			};
+
+			var clickStyle = function(e) {
+				var layer = e.target;
+				if (selected) {
+					previousSelected = selected;
+					geojson.resetStyle(previousSelected);
+				}
+				selected = layer;
+				//				console.log('selected', selected);
+				//				console.log('previous', previousSelected);
+				layer.setStyle({
+					weight: 3,
+					color: '#24476B ',
+					dashArray: '',
+					fillOpacity: 0.7
+				});
 			};
 
 			var zoomToFeature = function(e) {
 				map.fitBounds(e.target.getBounds());
-				highlightFeature(e);
+				clickStyle(e);
 				var name = e.target.feature.geometry.name;
 				console.log(name);
 				var zillowName = name.replace(/\s+/g, '');
@@ -205,7 +235,7 @@ var MapContainer = module.exports = React.createClass({
 					click: zoomToFeature
 				});
 				layer.on({
-					mouseover: highlightFeature,
+					mouseover: hoverOverStyle,
 					mouseout: resetHighlight,
 				});
 			};
@@ -216,14 +246,13 @@ var MapContainer = module.exports = React.createClass({
 				}).addTo(map);
 			});
 
+
 			geojson = L.geoJson(this.state.neighborhoodGeoJson, {
 				style: Style,
 				onEachFeature: onEachFeature
 			}).addTo(map);
 
 		}.bind(this), 300)
-
-
 	},
 
 	render: function() {
