@@ -152,10 +152,15 @@ header {
 	/*border-radius: 30%;*/
 }
 #parkButton {
+	height: 5em;
+	width: 5em;
 	cursor: pointer;
 	z-index: 1000;
 	display: block;
 	position: absolute;
 	right: 0;
 	bottom: 5%;
+	/*background-image: url('../data/Park_Icon_lg.png');*/
+	background-image: url('http://innatrichmond.com/wp-content/uploads/2015/06/favicon2.png');
+	background-repeat: no-repeat;
 }
