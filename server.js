@@ -22,7 +22,6 @@ app.get('/neighborhoods', function(req, res) {
 			if (err) {
 				console.log(err);
 			} else {
-//				console.log(data.text);
 				res.send(data.text);
 			}
 		})

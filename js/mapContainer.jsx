@@ -1,23 +1,39 @@
 var React = require('react');
 var request = require('superagent');
 var parseString = require('xml2js').parseString;
-var seattleNeighborhoods = require('../data/geojson_cleanedup.js');
-var ChartContainer = require('./chartContainer.jsx');
+var seattleNeighborhoods = require('../data/geojson_cleanedup_remove_median.js');
 var config = require('../config.js');
+
+var AgeChart = require('./ageChart.jsx');
+var MedianChart = require('./medianChart.jsx');
 
 var MapContainer = module.exports = React.createClass({
 
-	//load house median from zillows
+//	load house median from zillows
 	loadAllNeighborhoods: function() {
 		request
 			.get('/neighborhoods')
 			.end(function(err, res) {
 			if (res.ok) {
 				parseString(res.text, function(err, result) {
-					var output = result['RegionChildren:regionchildren']['response'];
-					//					console.log(output);
+					var outputArr = result['RegionChildren:regionchildren']['response'][0]['list'][0]['region'];
+					var medianObj = {}, 
+							name = '',
+							median = null;
+					for(var j = 0; j < outputArr.length; j++) {
+						name = outputArr[j]['name'][0];
+						if (outputArr[j].hasOwnProperty('zindex')) {
+							median = outputArr[j]['zindex'][0]._;
+						} else {
+							median = null;
+						}
+						medianObj[name] = median;
+					}
+					for (var i  = 0; i < seattleNeighborhoods.length; i++) {
+						seattleNeighborhoods[i]['median'] = medianObj[seattleNeighborhoods[i]['name']];
+					}
 					this.setState({
-						test: this.state.test = output
+						neighborhoodGeoJson: seattleNeighborhoods
 					})
 				}.bind(this));
 			} else {
@@ -25,21 +41,23 @@ var MapContainer = module.exports = React.createClass({
 			}
 		}.bind(this));
 	},
-
-	// initial state. set geojson
+																							 
+//	 initial state. set geojson
 	getInitialState: function() {
 		return {
 			neighborhoodGeoJson: seattleNeighborhoods,
-			test: {},
 			neighborhoodDetail: ''
 		};
 	},
 
 	// all layers are placed when component is mounted
 	componentDidMount: function() {
+		
+		//load midian from zillows and synthesize the genojson
+		this.loadAllNeighborhoods();
 		//map layer
 		var map = this.map = L.map(this.getDOMNode(), {
-			center: [47.65, -122.34],
+			center: [47.64, -122.24],
 			zoom: 12,
 			minZoom: 2,
 			maxZoom: 13,
@@ -52,9 +70,6 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
-
-		//load median house price
-		this.loadAllNeighborhoods();
 
 		//add style to tiles
 		var getColor = function(m) {
@@ -81,25 +96,29 @@ var MapContainer = module.exports = React.createClass({
 				dashArray: '3'
 			};
 		};
-		legend = L.control({position: 'bottomright'});
+		
+		
+		legend = L.control({position: 'bottomleft'});
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
 					grades = [0, 100000, 200000, 300000, 400000, 500000, 600000, 1000000],
+					gradesLegend = [0, '100k', '200k', '300k', '400k', '500k', '600k', '1M', 'No data'],
 					labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
-			div.innerHTML = '<h6 margin="0">Median Home Prices</h6>'
+			div.innerHTML = '<h5 margin="0">Median Home Prices</h5>'
 			for (var i = 0; i < grades.length; i++) {
 				div.innerHTML +=
 					'<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-					grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+					gradesLegend[i] + (i < grades.length - 1 ? '&ndash;' + gradesLegend[i + 1] + '<br>' : '+' + '<br>');
 			}
+			div.innerHTML += '<i style="background:' + getColor(-1) + '"></i> ' + gradesLegend[i];
 			return div;
 		};
 		legend.addTo(map);
+		
 		//allows info control of the dom;
-
-		var info = L.control();
+		var info = L.control({position: 'bottomleft'});
 		//when add is called, dom will create a div with id info
 		info.onAdd = function(map) {
 			this._div = L.DomUtil.create('div', 'info');
@@ -112,20 +131,22 @@ var MapContainer = module.exports = React.createClass({
 		};
 		info.addTo(map);
 
-		//add event listeners
-		var highlightFeature = function(e) {
-			var layer = e.target;
-			layer.setStyle({
-				weight: 3,
-				color: '#fff',
-				dashArray: '',
-				fillOpacity: 0.7
-			});
-			info.update(layer.feature.geometry.name);
-			if (!L.Browser.ie && !L.Browser.opera) {
-				layer.bringToFront();
-			}
-		};
+//		add style layer and event listener. delay loading until data is ready
+		setTimeout(function(){
+//			console.log('this.state.neighborhoodGeoJon', this.state.neighborhoodGeoJson[0]);
+			var highlightFeature = function(e) {
+					var layer = e.target;
+					layer.setStyle({
+						weight: 3,
+						color: '#fff',
+						dashArray: '',
+						fillOpacity: 0.7
+					});
+					info.update(layer.feature.geometry.name);
+					if (!L.Browser.ie && !L.Browser.opera) {
+						layer.bringToFront();
+					}
+			};
 
 		var resetHighlight = function(e) {
 			geojson.resetStyle(e.target);
@@ -134,6 +155,7 @@ var MapContainer = module.exports = React.createClass({
 
 		var zoomToFeature = function(e) {
 			map.fitBounds(e.target.getBounds());
+			highlightFeature(e);
 			var name = e.target.feature.geometry.name;
 			console.log(name);
 			var zillowName = name.replace(/\s+/g, '');
@@ -155,32 +177,37 @@ var MapContainer = module.exports = React.createClass({
 
 		var onEachFeature = function (feature, layer) {
 			layer.on({
+				click: zoomToFeature 
+			});
+			layer.on({
 				mouseover: highlightFeature,
 				mouseout: resetHighlight,
-				click: zoomToFeature // need to add http call here
 			});
 		};
+			
+			var geojson = this.state.neighborhoodGeoJson.map(function(neighborhood) {
+				L.geoJson(neighborhood, {
+					style: Style(neighborhood)
+				}).addTo(map);
+			});
 
-		//add style layer
-		var geojson = this.state.neighborhoodGeoJson.map(function(neighborhood) {
-			L.geoJson(neighborhood, {
-				style: Style(neighborhood)
+			geojson = L.geoJson(this.state.neighborhoodGeoJson, {
+				style: Style,
+				onEachFeature: onEachFeature
 			}).addTo(map);
-		});
-
-		geojson = L.geoJson(seattleNeighborhoods, {
-			style: Style,
-			onEachFeature: onEachFeature
-		}).addTo(map);
+		
+		}.bind(this), 1000)
+	
 
 	},
 
-	render: function() {
-		console.log('info on parent', this.state.neighborhoodDetail);
-		
+	render: function() {	
 		return (
 			<div id="mapStyle">
-				<ChartContainer info={this.state.neighborhoodDetail} />
+				<div id='sidebar'>
+					<AgeChart info={this.state.neighborhoodDetail} />
+					<MedianChart info={this.state.neighborhoodDetail} />
+				</div>
 			</div>
 		)
 	}
