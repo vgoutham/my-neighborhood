@@ -20,8 +20,8 @@ var MapContainer = module.exports = React.createClass({
 				parseString(res.text, function(err, result) {
 					var outputArr = result['RegionChildren:regionchildren']['response'][0]['list'][0]['region'];
 					var medianObj = {},
-						name = '',
-						median = null;
+							name = '',
+							median = null;
 					for(var j = 0; j < outputArr.length; j++) {
 						name = outputArr[j]['name'][0];
 						if (outputArr[j].hasOwnProperty('zindex')) {
@@ -58,7 +58,7 @@ var MapContainer = module.exports = React.createClass({
 		this.loadAllNeighborhoods();
 		//map layer
 		var map = this.map = L.map(this.getDOMNode(), {
-			center: [47.64, -122.24],
+			center: [47.609, -122.332099],
 			zoom: 12,
 			minZoom: 2,
 			maxZoom: 13,
@@ -71,23 +71,23 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
-//adding park markers
+		//adding park markers
 
 		var parkMarkers = parkData.map(function(arr) {
 			if (!arr[3]) {
 				return L.marker([arr[1], arr[0]]).bindPopup(arr[2]);
 			}
-		else {	return L.marker([arr[1], arr[0]]).bindPopup(arr[2] + '<br>' + arr[3]);
-	     }
+			else {	return L.marker([arr[1], arr[0]]).bindPopup(arr[2] + '<br>' + arr[3]);
+					 }
 		});
 
-  	var newMarkers = L.featureGroup(parkMarkers);
+		var newMarkers = L.featureGroup(parkMarkers);
 
-    var parkEvent = document.getElementById('parkButton');
+		var parkEvent = document.getElementById('parkButton');
 
-    parkEvent.addEventListener('click', parkClickHandler, false);
+		parkEvent.addEventListener('click', parkClickHandler, false);
 
-    var parkClicked = false;
+		var parkClicked = false;
 
 		function parkClickHandler() {
 			var parkBtn = document.getElementById('parkButton');
@@ -103,7 +103,7 @@ var MapContainer = module.exports = React.createClass({
 			}
 		}
 
-//crime button and crime marker functionality
+		//crime button and crime marker functionality
 		var murderMarkers = murderData.map(function(arr) {
 			return	L.marker(arr).bindPopup("Homicide");
 		});
@@ -129,6 +129,15 @@ var MapContainer = module.exports = React.createClass({
 				murderClicked = false;
 			}
 		}
+
+		//		add attribution
+		var attribution = L.control({position: 'bottomright'});
+		attribution.onAdd = function(map) {
+			var div = L.DomUtil.create('div', 'attribution');
+			div.innerHTML = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>;  Crime data &copy 2014 City of Seattle;  Neighborhood data &copy Zillows <img  height="15" src="http://www.zillowstatic.com/vstatic/fb9712c/static/logos/Zillow_Logo_HoodsProvided_RightAligned.gif">';
+			return div;
+		};
+		attribution.addTo(map);
 
 		//add style to tiles
 		var getColor = function(m) {
@@ -176,7 +185,7 @@ var MapContainer = module.exports = React.createClass({
 		legend.addTo(map);
 
 		//allows info control of the dom;
-		var info = L.control({position: 'bottomleft'});
+		var info = L.control({position: 'topright'});
 		//when add is called, dom will create a div with id info
 		info.onAdd = function(map) {
 			this._div = L.DomUtil.create('div', 'info');
@@ -225,8 +234,8 @@ var MapContainer = module.exports = React.createClass({
 				}
 				selected = layer;
 				layer.setStyle({
-					weight: 3,
-					color: '#24476B ',
+					weight: 4,
+					color: '#FFFF00 ',
 					dashArray: '',
 					fillOpacity: 0.7
 				});
@@ -280,9 +289,9 @@ var MapContainer = module.exports = React.createClass({
 	render: function() {
 		return (
 			<div id='mapWrapper'>
-				<div id="mapStyle"></div>
-				<CommuteChart info={this.state.neighborhoodDetail} />
-				<AgeChart info={this.state.neighborhoodDetail} />
+			<div id="mapStyle"></div>
+			<CommuteChart info={this.state.neighborhoodDetail} />
+			<AgeChart info={this.state.neighborhoodDetail} />
 			</div>
 		);
 	}
