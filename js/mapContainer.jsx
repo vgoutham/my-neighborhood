@@ -74,7 +74,11 @@ var MapContainer = module.exports = React.createClass({
 //adding park markers
 
 		var parkMarkers = parkData.map(function(arr) {
-			return L.marker([arr[1], arr[0]]).bindPopup(arr[2]);
+			if (!arr[3]) {
+				return L.marker([arr[1], arr[0]]).bindPopup(arr[2]);
+			}
+		else {	return L.marker([arr[1], arr[0]]).bindPopup(arr[2] + '<br>' + arr[3]);
+	     }
 		});
 
   	var newMarkers = L.featureGroup(parkMarkers);

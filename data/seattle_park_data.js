@@ -349,7 +349,7 @@ function getArray(array) {
     var newArray = [];
     var coordinatesArray = [];
     for (var i = 0; i < array.length; i ++) {
-      coordinatesArray.push(new Array(Number(array[i][12]), Number(array[i][13]), array[i][9]));
+      coordinatesArray.push(new Array(Number(array[i][12]), Number(array[i][13]), array[i][9], array[i][10]));
   }
     return coordinatesArray;
 }
