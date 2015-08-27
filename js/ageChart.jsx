@@ -14,16 +14,19 @@ var AgeDonut = module.exports = React.createClass({
       });
     }
 
-    var width = 400,
+    var width = 300,
         height = 300,
         radius = 250;
 
-    var color = d3.scale.ordinal()
-        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    var color = d3.scale.category20();
 
     var arc = d3.svg.arc()
         .outerRadius(radius - 120)
         .innerRadius(radius - 190);
+
+    var arcOver = d3.svg.arc()
+        .innerRadius(radius - 190)
+        .outerRadius(radius - 100);
 
     var pie = d3.layout.pie()
         .sort(null)
@@ -46,13 +49,36 @@ var AgeDonut = module.exports = React.createClass({
 
     g.append("path")
         .attr("d", arc)
-        .style("fill", function(d) { return color(d.data.name); });
+        .style("fill", function(d) { return color(d.data.name); })
+        .on("mouseover", function(d) {
+          d3.select(this).transition()
+            .duration(500)
+            .attr("d", arcOver);
+        })
+        .on("mouseout", function(d) {
+          d3.select(this).transition()
+            .duration(500)
+            .attr("d", arc);
+        });
 
     g.append("text")
         .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
         .text(function(d) { return d.data.name; });
+
+    svg.append("circle")
+      .attr("cx", 0)
+      .attr("cy", 0)
+      .attr("r", 0)
+      .attr("fill", "#fff")
+    svg.append("text")
+      .attr("dy", "-0.5em")
+      .style("text-anchor", "middle")
+      .attr("class", "inner-circle")
+      //.attr("fill", "#36454f")
+      .text(function(d) { return 'Age Distribution'; });
+
   },
   render: function() {
     if (this.props.info) {
