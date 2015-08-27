@@ -57,7 +57,7 @@ var MapContainer = module.exports = React.createClass({
 		this.loadAllNeighborhoods();
 		//map layer
 		var map = this.map = L.map(this.getDOMNode(), {
-			center: [47.64, -122.24],
+			center: [47.609, -122.332099],
 			zoom: 12,
 			minZoom: 2,
 			maxZoom: 13,
@@ -70,6 +70,7 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
+
 		var crimeEvent = document.getElementById('crimeButton');
 		crimeEvent.addEventListener('click', clickHandler, false);
 		var murderMarkers = murderData.map(function(arr) {
@@ -92,6 +93,17 @@ var MapContainer = module.exports = React.createClass({
 				clicked = false;
 			}
 		}
+		
+//		add attribution
+		var attribution = L.control({position: 'bottomright'});
+		attribution.onAdd = function(map) {
+			var div = L.DomUtil.create('div', 'attribution');
+			div.innerHTML = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>;  Crime data &copy 2014 City of Seattle;  Neighborhood data &copy Zillows <img  height="15" src="http://www.zillowstatic.com/vstatic/fb9712c/static/logos/Zillow_Logo_HoodsProvided_RightAligned.gif">';
+			return div;
+		};
+		attribution.addTo(map);
+
+
 
 		//add style to tiles
 		var getColor = function(m) {
@@ -119,7 +131,7 @@ var MapContainer = module.exports = React.createClass({
 			};
 		};
 
-		legend = L.control({position: 'bottomleft'});
+		var legend = L.control({position: 'bottomleft'});
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
@@ -127,7 +139,7 @@ var MapContainer = module.exports = React.createClass({
 					gradesLegend = [0, '100k', '200k', '300k', '400k', '500k', '600k', '1M', 'No data'],
 					labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
-			div.innerHTML = '<h5 margin="0">Median Home Prices</h5>'
+			div.innerHTML = '<h5> Zestimate Home Value</h5>'
 			for (var i = 0; i < grades.length; i++) {
 				div.innerHTML +=
 					'<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
@@ -139,7 +151,7 @@ var MapContainer = module.exports = React.createClass({
 		legend.addTo(map);
 
 		//allows info control of the dom;
-		var info = L.control({position: 'bottomleft'});
+		var info = L.control({position: 'topright'});
 		//when add is called, dom will create a div with id info
 		info.onAdd = function(map) {
 			this._div = L.DomUtil.create('div', 'info');
@@ -156,6 +168,7 @@ var MapContainer = module.exports = React.createClass({
 		setTimeout(function(){
 			var selected;
 			var previousSelected;
+
 			var hoverOverStyle = function(e) {
 				var layer = e.target;
 				if (!selected || layer._leaflet_id !== selected._leaflet_id) {
@@ -163,13 +176,11 @@ var MapContainer = module.exports = React.createClass({
 						weight: 3,
 						color: '#fff',
 						dashArray: '',
-						fillOpacity: 0.7
+						fillOpacity: 0.8
 					});
 				}
+				layer.bringToFront();
 				info.update(layer.feature.geometry.name);
-				if (!L.Browser.ie && !L.Browser.opera) {
-					layer.bringToFront();
-				}
 			};
 
 			var resetHighlight = function(e) {
@@ -190,9 +201,10 @@ var MapContainer = module.exports = React.createClass({
 				layer.setStyle({
 					weight: 3,
 					color: '#24476B ',
-					dashArray: '',
-					fillOpacity: 0.7
+					dashArray: '2',
+					zIndex: 1000
 				});
+				
 			};
 
 			var zoomToFeature = function(e) {
