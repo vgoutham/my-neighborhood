@@ -8,9 +8,9 @@ var App = React.createClass({
 	render: function() {
 		return (
 			<main>
-				<Header />
-				<MapContainer />
-			<Footer />
+        <Header />
+  			<MapContainer />
+        <section id='sidebar'></section>
 			</main>
 		)
 	}

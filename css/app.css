@@ -18,22 +18,39 @@ main {
 	height: 100%;
 }
 
-/************ d3 chart js stuff ************/
+/************ app container stuff ************/
 #sidebar {
 	width: 35%;
-	height: 100%;
-	background-color: rgba(69, 94, 99, 0.7);
+	height: calc(100% - 65px);
+	background-color: rgba(32, 45, 48, 0.85);
 	position: absolute;
 	right: 0;
 	transition: .6s all ease;
 	z-index: 999;
+	overflow-y: auto;
+	padding-top: 1em;
+	box-sizing: border-box;
+	bottom: 0;
 }
 
+#mapWrapper {
+	height: calc(100% - 65px);
+	width: 65%;
+	bottom: 0;
+	position: absolute;
+	
+}
+
+/************ d3 chart js stuff ************/
 .graphs {
 	padding: 2em;
 	border: 1px solid #FFF;
 	display: block;
 	margin: 0 auto;
+}
+
+.arc:hover {
+	opacity: .75;
 }
 
 rect {
@@ -51,13 +68,24 @@ text {
 }
 
 
+/************ header ************/
+header {
+	background: #1a1a1a;
+	height: 65px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	text-align: center;
+	color: #fff;
+}
+
 /************ leaflet map stuff ************/
 #mapStyle {
-	height: calc(100% -130px);
-	height: 90%;
-	width: 65%;
-	bottom: 65px;
+	height: calc(100% - 65px);
+	width: 100%;
 	position: absolute;
+	bottom: -65px;
+	overflow: hidden;
 }
 
 .attribution {
@@ -112,15 +140,9 @@ text {
 	opacity: 0.8;
 	display: none !important; /*TAKE THIS OUT LATER*/
 }
+
 #intro h1 {
 	top: 2em;
 	margin-bottom: 0;
 }
 
-/*************other component****************/
-footer {
-	position: absolute;
-	height: 65px;
-	margin-top:calc(100% -130px) + 65px;
-	color:#000;
-}
