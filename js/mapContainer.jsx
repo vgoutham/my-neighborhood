@@ -19,8 +19,8 @@ var MapContainer = module.exports = React.createClass({
 				parseString(res.text, function(err, result) {
 					var outputArr = result['RegionChildren:regionchildren']['response'][0]['list'][0]['region'];
 					var medianObj = {},
-							name = '',
-							median = null;
+						name = '',
+						median = null;
 					for(var j = 0; j < outputArr.length; j++) {
 						name = outputArr[j]['name'][0];
 						if (outputArr[j].hasOwnProperty('zindex')) {
@@ -152,15 +152,10 @@ var MapContainer = module.exports = React.createClass({
 		};
 		info.addTo(map);
 
-
-		//		add style layer and event listener. delay loading until data is ready
-
+		//add style layer and event listener. delay loading until data is ready
 		setTimeout(function(){
-
 			var selected;
 			var previousSelected;
-
-			//			console.log('this.state.neighborhoodGeoJon', this.state.neighborhoodGeoJson[0]);
 			var hoverOverStyle = function(e) {
 				var layer = e.target;
 				if (!selected || layer._leaflet_id !== selected._leaflet_id) {
@@ -192,8 +187,6 @@ var MapContainer = module.exports = React.createClass({
 					geojson.resetStyle(previousSelected);
 				}
 				selected = layer;
-				//				console.log('selected', selected);
-				//				console.log('previous', previousSelected);
 				layer.setStyle({
 					weight: 3,
 					color: '#24476B ',
@@ -244,18 +237,17 @@ var MapContainer = module.exports = React.createClass({
 				onEachFeature: onEachFeature
 			}).addTo(map);
 
-		}.bind(this), 300)
+		}.bind(this), 800)
 	},
 
 	render: function() {
 		return (
-			<div id="mapStyle">
-				<div id='sidebar'>
-					<MedianChart info={this.state.neighborhoodDetail} />
-					<AgeChart info={this.state.neighborhoodDetail} />
-				</div>
+			<div id='mapWrapper'>
+				<div id="mapStyle"></div>
+				<MedianChart info={this.state.neighborhoodDetail} />
+				<AgeChart info={this.state.neighborhoodDetail} />
 			</div>
-		)
+		);
 	}
 
 });
