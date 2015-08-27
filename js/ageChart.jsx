@@ -32,7 +32,7 @@ var AgeDonut = module.exports = React.createClass({
         .sort(null)
         .value(function(d) { return d.val; });
 
-    var svg = d3.select("#ageChart").append("svg")
+    var svg = d3.select("#sidebar").append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
