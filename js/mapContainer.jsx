@@ -70,12 +70,8 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
-<<<<<<< HEAD
 
-			var crimeEvent = document.getElementById('crimeButton');
-=======
 		var crimeEvent = document.getElementById('crimeButton');
->>>>>>> master
 		crimeEvent.addEventListener('click', clickHandler, false);
 		var murderMarkers = murderData.map(function(arr) {
 			return	L.marker(arr).bindPopup("Homicide");
@@ -97,6 +93,17 @@ var MapContainer = module.exports = React.createClass({
 				clicked = false;
 			}
 		}
+		
+//		add attribution
+		var attribution = L.control({position: 'bottomright'});
+		attribution.onAdd = function(map) {
+			var div = L.DomUtil.create('div', 'attribution');
+			div.innerHTML = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>;  Crime data &copy 2014 City of Seattle;  Neighborhood data &copy Zillows <img  height="15" src="http://www.zillowstatic.com/vstatic/fb9712c/static/logos/Zillow_Logo_HoodsProvided_RightAligned.gif">';
+			return div;
+		};
+		attribution.addTo(map);
+
+
 
 		//add style to tiles
 		var getColor = function(m) {
@@ -124,7 +131,7 @@ var MapContainer = module.exports = React.createClass({
 			};
 		};
 
-		legend = L.control({position: 'bottomleft'});
+		var legend = L.control({position: 'bottomleft'});
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
@@ -132,7 +139,7 @@ var MapContainer = module.exports = React.createClass({
 					gradesLegend = [0, '100k', '200k', '300k', '400k', '500k', '600k', '1M', 'No data'],
 					labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
-			div.innerHTML = '<h5 margin="0">Median Home Prices</h5>'
+			div.innerHTML = '<h5> Zestimate Home Value</h5>'
 			for (var i = 0; i < grades.length; i++) {
 				div.innerHTML +=
 					'<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
@@ -144,7 +151,7 @@ var MapContainer = module.exports = React.createClass({
 		legend.addTo(map);
 
 		//allows info control of the dom;
-		var info = L.control({position: 'bottomleft'});
+		var info = L.control({position: 'topright'});
 		//when add is called, dom will create a div with id info
 		info.onAdd = function(map) {
 			this._div = L.DomUtil.create('div', 'info');

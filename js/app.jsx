@@ -2,12 +2,15 @@ var React = require('react');
 
 var Header = require('./header.jsx');
 var MapContainer = require('./mapContainer.jsx');
+var Footer = require('./footer.jsx');
 
 var App = React.createClass({
 	render: function() {
 		return (
 			<main>
-  			<MapContainer />
+				<Header />
+				<MapContainer />
+			<Footer />
 			</main>
 		)
 	}

@@ -49,11 +49,25 @@ text {
 	letter-spacing: 0;
 	fill: #FFF;
 }
+
+
 /************ leaflet map stuff ************/
 #mapStyle {
-	height: 100%;
-	width: 100%;
+	height: calc(100% -130px);
+	height: 90%;
+	width: 65%;
+	bottom: 65px;
 	position: absolute;
+}
+
+.attribution {
+	font-size: 0.8em;
+	text-align: center;
+	color: #506C89 ;
+	background: rgba(194, 214, 214, 0.5);
+}
+.attribution a {
+	color: darkgray;
 }
 
 .info {
@@ -74,8 +88,8 @@ text {
 	line-height: 1.125em;
 	color: #555;
 }
-.legend h6{
-	margin: 0;
+.legend h5{
+	margin: 0.2em;
 }
 .legend i {
 	width: .5em;
@@ -101,4 +115,12 @@ text {
 #intro h1 {
 	top: 2em;
 	margin-bottom: 0;
+}
+
+/*************other component****************/
+footer {
+	position: absolute;
+	height: 65px;
+	margin-top:calc(100% -130px) + 65px;
+	color:#000;
 }
