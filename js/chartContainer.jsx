@@ -6,7 +6,7 @@ var ChartContainer = module.exports = React.createClass({
   counter: 0,
 
   drawGraph: function(datax) {
-        console.log('draw graph invoked!!!!!', datax);
+//        console.log('draw graph invoked!!!!!', datax);
         
         var ageDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[1].data[0].attribute;
         //console.log(ageDistribution);
@@ -121,11 +121,11 @@ var ChartContainer = module.exports = React.createClass({
 
   render: function() {
     if (this.props.info && this.counter == 0) {
-      console.log('child if: '+ this.props.info);
+//      console.log('child if: '+ this.props.info);
       this.drawGraph(this.props.info);
     }
     if (this.props.info && this.counter > 0) {
-      console.log('child if: '+ this.props.info);
+//      console.log('child if: '+ this.props.info);
       this.updateGraph(this.props.info);
     }
 		return (

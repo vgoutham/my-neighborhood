@@ -9,7 +9,7 @@ var easyButton = require('../Leaflet.EasyButton/src/easy-button.js');
 
 var MapContainer = module.exports = React.createClass({
 
-//	load house median from zillows
+	//	load house median from zillows
 	loadAllNeighborhoods: function() {
 		request
 			.get('/neighborhoods')
@@ -42,7 +42,7 @@ var MapContainer = module.exports = React.createClass({
 		}.bind(this));
 	},
 
-//	 initial state. set geojson
+	//	 initial state. set geojson
 	getInitialState: function() {
 		return {
 			neighborhoodGeoJson: seattleNeighborhoods,
@@ -69,32 +69,36 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
+		<<<<<<< HEAD
+
+			=======
 
 
 
-var crimeEvent = document.getElementById('crimeButton');
-crimeEvent.addEventListener('click', clickHandler, false);
-var murderMarkers = murderData.map(function(arr) {
-	return	L.marker(arr).bindPopup("Homicide");
-});
+			var crimeEvent = document.getElementById('crimeButton');
+		crimeEvent.addEventListener('click', clickHandler, false);
+		var murderMarkers = murderData.map(function(arr) {
+			return	L.marker(arr).bindPopup("Homicide");
+		});
 
-var clicked = false;
-var mapMarkers = L.featureGroup(murderMarkers);
-	function clickHandler() {
-		var btn = document.getElementById('crimeButton');
-		if (clicked === false) {
-		map.addLayer(mapMarkers);
-		btn.innerHTML = 'Hide Seattle Homicides';
-		clicked = true;
-	}
-	else {
-		console.log(mapMarkers);
-		map.removeLayer(mapMarkers);
-		btn.innerHTML = 'Show Seattle Homicides';
-		clicked = false;
-	 }
-	}
+		var clicked = false;
+		var mapMarkers = L.featureGroup(murderMarkers);
+		function clickHandler() {
+			var btn = document.getElementById('crimeButton');
+			if (clicked === false) {
+				map.addLayer(mapMarkers);
+				btn.innerHTML = 'Hide Seattle Homicides';
+				clicked = true;
+			}
+			else {
+				console.log(mapMarkers);
+				map.removeLayer(mapMarkers);
+				btn.innerHTML = 'Show Seattle Homicides';
+				clicked = false;
+			}
+		}
 
+		>>>>>>> master
 		//add style to tiles
 		var getColor = function(m) {
 			m = parseInt(m);
@@ -121,7 +125,7 @@ var mapMarkers = L.featureGroup(murderMarkers);
 			};
 		};
 
-legend = L.control({position: 'bottomleft'});
+		legend = L.control({position: 'bottomleft'});
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
@@ -155,60 +159,86 @@ legend = L.control({position: 'bottomleft'});
 		info.addTo(map);
 
 
-//		add style layer and event listener. delay loading until data is ready
+		//		add style layer and event listener. delay loading until data is ready
 
 		setTimeout(function(){
-//			console.log('this.state.neighborhoodGeoJon', this.state.neighborhoodGeoJson[0]);
-			var highlightFeature = function(e) {
-					var layer = e.target;
+
+			var selected;
+			var previousSelected;
+
+			//			console.log('this.state.neighborhoodGeoJon', this.state.neighborhoodGeoJson[0]);
+			var hoverOverStyle = function(e) {
+				var layer = e.target;
+				if (!selected || layer._leaflet_id !== selected._leaflet_id) {
 					layer.setStyle({
 						weight: 3,
 						color: '#fff',
 						dashArray: '',
 						fillOpacity: 0.7
 					});
-					info.update(layer.feature.geometry.name);
-					if (!L.Browser.ie && !L.Browser.opera) {
-						layer.bringToFront();
-					}
+				}
+				info.update(layer.feature.geometry.name);
+				if (!L.Browser.ie && !L.Browser.opera) {
+					layer.bringToFront();
+				}
 			};
 
-		var resetHighlight = function(e) {
-			geojson.resetStyle(e.target);
-			info.update();
-		};
-
-		var zoomToFeature = function(e) {
-			map.fitBounds(e.target.getBounds());
-			highlightFeature(e);
-			var name = e.target.feature.geometry.name;
-			console.log(name);
-			var zillowName = name.replace(/\s+/g, '');
-			request
-				.get('/' + zillowName)
-				.end(function(err, res) {
-				if (res.ok) {
-					parseString(res.text, function(err, result) {
-						this.setState({
-							neighborhoodDetail: result
-						})
-					}.bind(this));
-				} else {
-					console.log(res.text);
+			var resetHighlight = function(e) {
+				var layer = e.target;
+				if (!selected || layer._leaflet_id !== selected._leaflet_id) {
+					geojson.resetStyle(layer);
 				}
-			}.bind(this));
-		}.bind(this);
+				info.update();
+			};
+
+			var clickStyle = function(e) {
+				var layer = e.target;
+				if (selected) {
+					previousSelected = selected;
+					geojson.resetStyle(previousSelected);
+				}
+				selected = layer;
+				//				console.log('selected', selected);
+				//				console.log('previous', previousSelected);
+				layer.setStyle({
+					weight: 3,
+					color: '#24476B ',
+					dashArray: '',
+					fillOpacity: 0.7
+				});
+			};
+
+			var zoomToFeature = function(e) {
+				map.fitBounds(e.target.getBounds());
+				clickStyle(e);
+				var name = e.target.feature.geometry.name;
+				console.log(name);
+				var zillowName = name.replace(/\s+/g, '');
+				request
+					.get('/' + zillowName)
+					.end(function(err, res) {
+					if (res.ok) {
+						parseString(res.text, function(err, result) {
+							this.setState({
+								neighborhoodDetail: result
+							})
+						}.bind(this));
+					} else {
+						console.log(res.text);
+					}
+				}.bind(this));
+			}.bind(this);
 
 
-		var onEachFeature = function (feature, layer) {
-			layer.on({
-				click: zoomToFeature
-			});
-			layer.on({
-				mouseover: highlightFeature,
-				mouseout: resetHighlight,
-			});
-		};
+			var onEachFeature = function (feature, layer) {
+				layer.on({
+					click: zoomToFeature
+				});
+				layer.on({
+					mouseover: hoverOverStyle,
+					mouseout: resetHighlight,
+				});
+			};
 
 			var geojson = this.state.neighborhoodGeoJson.map(function(neighborhood) {
 				L.geoJson(neighborhood, {
@@ -216,20 +246,19 @@ legend = L.control({position: 'bottomleft'});
 				}).addTo(map);
 			});
 
+
 			geojson = L.geoJson(this.state.neighborhoodGeoJson, {
 				style: Style,
 				onEachFeature: onEachFeature
 			}).addTo(map);
 
 		}.bind(this), 300)
-
-
 	},
 
 	render: function() {
 		return (
 			<div id="mapStyle">
-				<ChartContainer info={this.state.neighborhoodDetail} />
+			<ChartContainer info={this.state.neighborhoodDetail} />
 			</div>
 		)
 	}
