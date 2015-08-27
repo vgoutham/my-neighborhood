@@ -5,8 +5,9 @@ var seattleNeighborhoods = require('../data/geojson_cleanedup_remove_median.js')
 var config = require('../config.js');
 var murderData = require('../data/seattle_homicide_data.js');
 var easyButton = require('../Leaflet.EasyButton/src/easy-button.js');
-var MedianChart = require('./medianChart.jsx');
+var CommuteChart = require('./commuteChart.jsx');
 var AgeChart = require('./ageChart.jsx');
+var parkData = require('../data/seattle_park_data.js');
 
 var MapContainer = module.exports = React.createClass({
 
@@ -19,8 +20,8 @@ var MapContainer = module.exports = React.createClass({
 				parseString(res.text, function(err, result) {
 					var outputArr = result['RegionChildren:regionchildren']['response'][0]['list'][0]['region'];
 					var medianObj = {},
-						name = '',
-						median = null;
+							name = '',
+							median = null;
 					for(var j = 0; j < outputArr.length; j++) {
 						name = outputArr[j]['name'][0];
 						if (outputArr[j].hasOwnProperty('zindex')) {
@@ -57,7 +58,7 @@ var MapContainer = module.exports = React.createClass({
 		this.loadAllNeighborhoods();
 		//map layer
 		var map = this.map = L.map(this.getDOMNode(), {
-			center: [47.609, -122.332099],
+			center: [47.64, -122.24],
 			zoom: 12,
 			minZoom: 2,
 			maxZoom: 13,
@@ -70,40 +71,64 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
+		//adding park markers
 
-		var crimeEvent = document.getElementById('crimeButton');
-		crimeEvent.addEventListener('click', clickHandler, false);
+		var parkMarkers = parkData.map(function(arr) {
+			if (!arr[3]) {
+				return L.marker([arr[1], arr[0]]).bindPopup(arr[2]);
+			}
+			else {	return L.marker([arr[1], arr[0]]).bindPopup(arr[2] + '<br>' + arr[3]);
+					 }
+		});
+
+		var newMarkers = L.featureGroup(parkMarkers);
+
+		var parkEvent = document.getElementById('parkButton');
+
+		parkEvent.addEventListener('click', parkClickHandler, false);
+
+		var parkClicked = false;
+
+		function parkClickHandler() {
+			var parkBtn = document.getElementById('parkButton');
+			if(!parkClicked) {
+				map.addLayer(newMarkers);
+				parkBtn.innerHTML = 'Hide Seattle Parks';
+				parkClicked = true;
+			}
+			else {
+				map.removeLayer(newMarkers);
+				parkBtn.innerHTML = 'Show Seattle Parks';
+				parkClicked = false;
+			}
+		}
+
+		//crime button and crime marker functionality
 		var murderMarkers = murderData.map(function(arr) {
 			return	L.marker(arr).bindPopup("Homicide");
 		});
 
-		var clicked = false;
 		var mapMarkers = L.featureGroup(murderMarkers);
+
+		var crimeEvent = document.getElementById('crimeButton');
+
+		crimeEvent.addEventListener('click', clickHandler, false);
+
+		var murderClicked = false;
+
 		function clickHandler() {
 			var btn = document.getElementById('crimeButton');
-			if (clicked === false) {
+			if (murderClicked === false) {
 				map.addLayer(mapMarkers);
 				btn.innerHTML = 'Hide Seattle Homicides';
-				clicked = true;
+				murderClicked = true;
 			}
 			else {
-				console.log(mapMarkers);
 				map.removeLayer(mapMarkers);
 				btn.innerHTML = 'Show Seattle Homicides';
-				clicked = false;
+				murderClicked = false;
 			}
 		}
-		
-//		add attribution
-		var attribution = L.control({position: 'bottomright'});
-		attribution.onAdd = function(map) {
-			var div = L.DomUtil.create('div', 'attribution');
-			div.innerHTML = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>;  Crime data &copy 2014 City of Seattle;  Neighborhood data &copy Zillows <img  height="15" src="http://www.zillowstatic.com/vstatic/fb9712c/static/logos/Zillow_Logo_HoodsProvided_RightAligned.gif">';
-			return div;
-		};
-		attribution.addTo(map);
-
-
 
 		//add style to tiles
 		var getColor = function(m) {
@@ -131,7 +156,7 @@ var MapContainer = module.exports = React.createClass({
 			};
 		};
 
-		var legend = L.control({position: 'bottomleft'});
+		legend = L.control({position: 'bottomleft'});
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
@@ -139,7 +164,7 @@ var MapContainer = module.exports = React.createClass({
 					gradesLegend = [0, '100k', '200k', '300k', '400k', '500k', '600k', '1M', 'No data'],
 					labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
-			div.innerHTML = '<h5> Zestimate Home Value</h5>'
+			div.innerHTML = '<h5 margin="0">Median Home Prices</h5>'
 			for (var i = 0; i < grades.length; i++) {
 				div.innerHTML +=
 					'<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
@@ -151,7 +176,7 @@ var MapContainer = module.exports = React.createClass({
 		legend.addTo(map);
 
 		//allows info control of the dom;
-		var info = L.control({position: 'topright'});
+		var info = L.control({position: 'bottomleft'});
 		//when add is called, dom will create a div with id info
 		info.onAdd = function(map) {
 			this._div = L.DomUtil.create('div', 'info');
@@ -168,7 +193,6 @@ var MapContainer = module.exports = React.createClass({
 		setTimeout(function(){
 			var selected;
 			var previousSelected;
-
 			var hoverOverStyle = function(e) {
 				var layer = e.target;
 				if (!selected || layer._leaflet_id !== selected._leaflet_id) {
@@ -176,11 +200,13 @@ var MapContainer = module.exports = React.createClass({
 						weight: 3,
 						color: '#fff',
 						dashArray: '',
-						fillOpacity: 0.8
+						fillOpacity: 0.7
 					});
 				}
-				layer.bringToFront();
 				info.update(layer.feature.geometry.name);
+				if (!L.Browser.ie && !L.Browser.opera) {
+					layer.bringToFront();
+				}
 			};
 
 			var resetHighlight = function(e) {
@@ -201,10 +227,9 @@ var MapContainer = module.exports = React.createClass({
 				layer.setStyle({
 					weight: 3,
 					color: '#24476B ',
-					dashArray: '2',
-					zIndex: 1000
+					dashArray: '',
+					fillOpacity: 0.7
 				});
-				
 			};
 
 			var zoomToFeature = function(e) {
@@ -255,9 +280,9 @@ var MapContainer = module.exports = React.createClass({
 	render: function() {
 		return (
 			<div id='mapWrapper'>
-				<div id="mapStyle"></div>
-				<MedianChart info={this.state.neighborhoodDetail} />
-				<AgeChart info={this.state.neighborhoodDetail} />
+			<div id="mapStyle"></div>
+			<CommuteChart info={this.state.neighborhoodDetail} />
+			<AgeChart info={this.state.neighborhoodDetail} />
 			</div>
 		);
 	}

@@ -2,87 +2,114 @@ var React = require('react');
 
 var AgeDonut = module.exports = React.createClass({
 
+  counter: 0,
+
   drawGraph: function(datax) {
 
-    var nameDemographics = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[1].data[0].attribute;
+    var ageDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[1].data[0].attribute;
 
-    var data = [];
-    for (var i = 0; i < nameDemographics.length; i++) {
-      data.push({
-        name: nameDemographics[i].name[0],
-        val: Math.round(nameDemographics[i].value[0]._ * 100)
+    var dataArr = [];
+    for (var i = 0; i < ageDistribution.length; i++) {
+      dataArr.push({
+        name: ageDistribution[i].name[0],
+        val: Math.round(ageDistribution[i].value[0]._ * 100)
       });
     }
 
-    var width = 300,
-        height = 300,
-        radius = 250;
+    var width = 300;
+    var height = 300;
+    var radius = 280;
 
     var color = d3.scale.category20();
 
     var arc = d3.svg.arc()
-        .outerRadius(radius - 120)
-        .innerRadius(radius - 190);
+      .innerRadius(radius - 210)
+      .outerRadius(radius - 120);
 
     var arcOver = d3.svg.arc()
-        .innerRadius(radius - 190)
-        .outerRadius(radius - 100);
+      .innerRadius(radius - 210)
+      .outerRadius(radius - 100);
 
     var pie = d3.layout.pie()
-        .sort(null)
-        .value(function(d) { return d.val; });
+      .sort(null)
+      .value(function(d) { return d.val; });
 
-    var svg = d3.select("#sidebar").append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    var svg = d3.select('#sidebar')
+      .append('svg')
+      .attr('id', 'ageChart')
+      .attr('class', 'graphs')
+      .attr('width', width)
+      .attr('height', height)
+      .append('g')
+      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
-    data.forEach(function(d) {
-      d.val = +d.val;
-    });
+    var g = svg.selectAll('.arc')
+      .data(pie(dataArr))
+      .enter()
+      .append('g')
+      .attr('class', 'arc');
 
-    var g = svg.selectAll(".arc")
-        .data(pie(data))
-        .enter().append("g")
-        .attr("class", "arc");
+    g.append('path')
+      .attr('d', arc)
+      .attr('class', 'ageArcs')
+      .style('fill', function(d) { return color(d.data.name); })
+      .on('mouseover', function(d) {
+        d3.select(this).transition()
+          .duration(500)
+          .attr('d', arcOver);
+      })
+      .on('mouseout', function(d) {
+        d3.select(this).transition()
+          .duration(500)
+          .attr('d', arc);
+      });
 
-    g.append("path")
-        .attr("d", arc)
-        .style("fill", function(d) { return color(d.data.name); })
-        .on("mouseover", function(d) {
-          d3.select(this).transition()
-            .duration(500)
-            .attr("d", arcOver);
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).transition()
-            .duration(500)
-            .attr("d", arc);
-        });
+    g.append('text')
+      .attr('transform', function(d) { return 'translate(' + arc.centroid(d) + ')'; })
+      .attr('dy', '.35em')
+      .style('text-anchor', 'middle')
+      .text(function(d) { return d.data.name + ', ' + d.data.val + '%'; });
 
-    g.append("text")
-        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-        .attr("dy", ".35em")
-        .style("text-anchor", "middle")
-        .text(function(d) { return d.data.name; });
-
-    svg.append("circle")
-      .attr("cx", 0)
-      .attr("cy", 0)
-      .attr("r", 0)
-      .attr("fill", "#fff")
-    svg.append("text")
-      .attr("dy", "-0.5em")
-      .style("text-anchor", "middle")
-      .attr("class", "inner-circle")
-      //.attr("fill", "#36454f")
+    svg.append('text')
+      .attr('dy', '0')
+      .style('text-anchor', 'middle')
+      .attr('class', 'inner-circle')
       .text(function(d) { return 'Age Distribution'; });
 
+    this.counter += 1;
   },
+
+  updateGraph: function(datax) {
+    var ageDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[1].data[0].attribute;
+    var dataArr = [];
+    for (var i = 0; i < ageDistribution.length; i++) {
+      dataArr.push({
+        name: ageDistribution[i].name[0],
+        val: Math.round(ageDistribution[i].value[0]._ * 100)
+      });
+    }
+
+    var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d) { return d.val; });
+
+    d3.transition()
+      .each(function() {
+        d3.selectAll('.arc')
+          .data(pie(dataArr))
+          .transition()
+          .duration(400)
+          .ease('linear')
+        });
+  },
+
+
   render: function() {
-    if (this.props.info) {
+    if (this.props.info && this.counter == 0) {
       this.drawGraph(this.props.info);
+    }
+    if (this.props.info && this.counter > 0) {
+      this.updateGraph(this.props.info);
     }
     return(
       <article id='ageChart'></article>
