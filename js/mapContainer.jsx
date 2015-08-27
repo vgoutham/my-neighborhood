@@ -2,10 +2,11 @@ var React = require('react');
 var request = require('superagent');
 var parseString = require('xml2js').parseString;
 var seattleNeighborhoods = require('../data/geojson_cleanedup_remove_median.js');
-var ChartContainer = require('./chartContainer.jsx');
 var config = require('../config.js');
 var murderData = require('../data/seattle_homicide_data.js');
 var easyButton = require('../Leaflet.EasyButton/src/easy-button.js');
+var MedianChart = require('./medianChart.jsx');
+var AgeChart = require('./ageChart.jsx');
 
 var MapContainer = module.exports = React.createClass({
 
@@ -69,13 +70,7 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
-		<<<<<<< HEAD
-
-			=======
-
-
-
-			var crimeEvent = document.getElementById('crimeButton');
+		var crimeEvent = document.getElementById('crimeButton');
 		crimeEvent.addEventListener('click', clickHandler, false);
 		var murderMarkers = murderData.map(function(arr) {
 			return	L.marker(arr).bindPopup("Homicide");
@@ -98,7 +93,6 @@ var MapContainer = module.exports = React.createClass({
 			}
 		}
 
-		>>>>>>> master
 		//add style to tiles
 		var getColor = function(m) {
 			m = parseInt(m);
@@ -229,7 +223,6 @@ var MapContainer = module.exports = React.createClass({
 				}.bind(this));
 			}.bind(this);
 
-
 			var onEachFeature = function (feature, layer) {
 				layer.on({
 					click: zoomToFeature
@@ -246,7 +239,6 @@ var MapContainer = module.exports = React.createClass({
 				}).addTo(map);
 			});
 
-
 			geojson = L.geoJson(this.state.neighborhoodGeoJson, {
 				style: Style,
 				onEachFeature: onEachFeature
@@ -258,7 +250,10 @@ var MapContainer = module.exports = React.createClass({
 	render: function() {
 		return (
 			<div id="mapStyle">
-			<ChartContainer info={this.state.neighborhoodDetail} />
+				<div id='sidebar'>
+					<MedianChart info={this.state.neighborhoodDetail} />
+					<AgeChart info={this.state.neighborhoodDetail} />
+				</div>
 			</div>
 		)
 	}
