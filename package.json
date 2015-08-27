@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify js/app.jsx -o build/bundle.js"
+    "build": "browserify js/app.jsx -o build/bundle.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +16,6 @@
   "license": "ISC",
   "devDependencies": {
     "body": "^5.1.0",
-    "body-parser": "^1.13.3",
     "browserify": "^11.0.1",
     "gulp": "^3.9.0",
     "gulp-react": "^3.0.1",
@@ -29,6 +29,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "body-parser": "^1.13.3",
     "express": "^4.13.3",
     "superagent": "^1.3.0",
     "xml2js": "^0.4.10"

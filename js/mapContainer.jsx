@@ -5,7 +5,7 @@ var seattleNeighborhoods = require('../data/geojson_cleanedup_remove_median.js')
 var config = require('../config.js');
 var murderData = require('../data/seattle_homicide_data.js');
 var easyButton = require('../Leaflet.EasyButton/src/easy-button.js');
-var MedianChart = require('./medianChart.jsx');
+var CommuteChart = require('./commuteChart.jsx');
 var AgeChart = require('./ageChart.jsx');
 var parkData = require('../data/seattle_park_data.js');
 
@@ -281,7 +281,7 @@ var MapContainer = module.exports = React.createClass({
 		return (
 			<div id='mapWrapper'>
 				<div id="mapStyle"></div>
-				<MedianChart info={this.state.neighborhoodDetail} />
+				<CommuteChart info={this.state.neighborhoodDetail} />
 				<AgeChart info={this.state.neighborhoodDetail} />
 			</div>
 		);
