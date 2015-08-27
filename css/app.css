@@ -22,13 +22,8 @@ main {
 /************ app container stuff ************/
 #sidebar {
 	width: 35%;
-<<<<<<< HEAD
 	height: calc(100% - 65px);
 	background-color: rgba(32, 45, 48, 0.85);
-=======
-	height: 100%;
-	background-color: rgba(69, 94, 99, 0.9);
->>>>>>> button-and-styling
 	position: absolute;
 	right: 0;
 	transition: .6s all ease;
