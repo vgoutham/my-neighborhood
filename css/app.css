@@ -30,7 +30,7 @@ button:focus {
 #sidebar {
 	width: 35%;
 	height: calc(100% - 65px);
-	background-color: rgba(32, 45, 48, 0.5);
+	background-color: rgba(32, 45, 48, 0.85);
 	position: absolute;
 	right: 0;
 	transition: .6s all ease;
