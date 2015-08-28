@@ -61,7 +61,7 @@ var MapContainer = module.exports = React.createClass({
 			center: [47.609, -122.332099],
 			zoom: 12,
 			minZoom: 2,
-			maxZoom: 15,
+			maxZoom: 13,
 			layers: [
 				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -261,7 +261,6 @@ var murderIcon = L.icon({
 				map.fitBounds(e.target.getBounds());
 				clickStyle(e);
 				var name = e.target.feature.geometry.name;
-				console.log(name);
 				var zillowName = name.replace(/\s+/g, '');
 				request
 					.get('/' + zillowName)
@@ -270,7 +269,7 @@ var murderIcon = L.icon({
 						parseString(res.text, function(err, result) {
 							this.setState({
 								neighborhoodDetail: result
-							})
+							});
 						}.bind(this));
 					} else {
 						console.log(res.text);
@@ -307,7 +306,7 @@ var murderIcon = L.icon({
 			<div id='mapWrapper'>
  				<CommuteChart info={this.state.neighborhoodDetail} />
  				<BuildYearChart info={this.state.neighborhoodDetail} />
-
+				<AgeChart info={this.state.neighborhoodDetail} />
 			</div>
 		);
 	}

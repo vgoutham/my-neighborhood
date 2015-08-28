@@ -85,11 +85,11 @@ header {
 	width: 100%;
 	position: absolute;
 	text-align: center;
-	color: #8FB2B2;
+	color: #177FA3;
 }
 
 header article {
-	letter-: 3px;
+	letter-spacing: 2px;
 	font-weight: bold;
 	font-size: 35px;
 	padding-top: 10px;
