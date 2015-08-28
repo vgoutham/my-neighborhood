@@ -174,9 +174,9 @@ var MapContainer = module.exports = React.createClass({
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
-				grades = [0, 100000, 200000, 300000, 400000, 500000, 600000, 1000000],
-				gradesLegend = [0, '100k', '200k', '300k', '400k', '500k', '600k', '1M', 'No data'],
-				labels = [];
+					grades = [200000, 300000, 400000, 500000, 600000, 700000, 1000000],
+					gradesLegend = ['200k', '300k', '400k', '500k', '600k', '700k','1M', 'No data'],
+					labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
 			div.innerHTML = '<h5 margin="0">Median Home Prices</h5>'
 			for (var i = 0; i < grades.length; i++) {
@@ -294,7 +294,6 @@ var MapContainer = module.exports = React.createClass({
 	render: function() {
 		return (
 			<div id='mapWrapper'>
-				<div id="mapStyle"></div>
 				<CommuteChart info={this.state.neighborhoodDetail} />
 				<AgeChart info={this.state.neighborhoodDetail} />
 			</div>
