@@ -16,8 +16,8 @@ var AgeDonut = module.exports = React.createClass({
       });
     }
 
-    var width = 300;
-    var height = 300;
+    var width = 330;
+    var height = 330;
     var radius = 280;
 
     var color = d3.scale.category20();
@@ -66,7 +66,7 @@ var AgeDonut = module.exports = React.createClass({
 
     g.append('text')
       .attr('transform', function(d) { return 'translate(' + arc.centroid(d) + ')'; })
-      .attr('dy', '.35em')
+      .attr('dy', '.15em')
       .style('text-anchor', 'middle')
       .text(function(d) { return d.data.name + ', ' + d.data.val + '%'; });
 /*
@@ -108,7 +108,9 @@ var AgeDonut = module.exports = React.createClass({
       this.drawGraph(this.props.info);
     }
     if (this.props.info && this.counter > 0) {
-      this.updateGraph(this.props.info);
+      d3.select("#ageChart")
+       .remove();
+      this.drawGraph(this.props.info);
     }
     return(
       <article></article>
