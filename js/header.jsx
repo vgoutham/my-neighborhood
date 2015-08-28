@@ -4,9 +4,10 @@ var Header = module.exports = React.createClass({
 	render: function() {
 		return (
 			<header>
-			<ul>
-			<li><a href="https://github.com/gouthamvreddy/my-neighborhood"><img src="../data/GitHub-Mark/PNG/GitHub-Mark-Light-32px.png" /></a></li>
-			</ul>
+        <h1>myNeighborhood</h1>
+  			<a href="https://github.com/gouthamvreddy/my-neighborhood" target="_blank">
+          <img src="../data/myhoodlogo.png" />
+        </a>
 			</header>
 		)
 	}

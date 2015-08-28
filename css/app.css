@@ -62,12 +62,12 @@ button:focus {
 }
 
 rect {
-	fill: rgba(70, 130, 180, .6);
+	fill: rgba(31, 119, 180, 1);
 	transition: fill 0.3s ease;
 }
 
 rect:hover {
-	fill:rgba(255,60,60,.6);
+	fill:rgba(255,60,60,.8);
 }
 
 text {
@@ -266,4 +266,23 @@ h1 img {
 	color: #FFF;
 	font-size: 1.6em;
 	margin-top: .5em;
+}
+header h1 {
+	letter-spacing: 1px;
+}
+header a img {
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 1000;
+	-webkit-transition: all .6s ease;
+	-o-transition: all .6s ease;
+	transition: all .6s ease;
+	filter: grayscale(100%);
+	-webkit-filter: grayscale(100%);
+}
+
+header a img:hover {
+	filter: grayscale(0%);
+	-webkit-filter: grayscale(0%);
 }
