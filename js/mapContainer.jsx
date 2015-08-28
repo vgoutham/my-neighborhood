@@ -4,10 +4,10 @@ var parseString = require('xml2js').parseString;
 var seattleNeighborhoods = require('../data/geojson_cleanedup_remove_median.js');
 var config = require('../config.js');
 var murderData = require('../data/seattle_homicide_data.js');
-var easyButton = require('../Leaflet.EasyButton/src/easy-button.js');
 var CommuteChart = require('./commuteChart.jsx');
 var AgeChart = require('./ageChart.jsx');
 var parkData = require('../data/seattle_park_data.js');
+
 
 var MapContainer = module.exports = React.createClass({
 
@@ -61,7 +61,7 @@ var MapContainer = module.exports = React.createClass({
 			center: [47.609, -122.332099],
 			zoom: 12,
 			minZoom: 2,
-			maxZoom: 13,
+			maxZoom: 15,
 			layers: [
 				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -72,19 +72,23 @@ var MapContainer = module.exports = React.createClass({
 			attributionControl: false,
 		});
 
-		var greenIcon = L.icon({
-		    iconUrl: './data/leaf-green.png',
-		    iconSize:     [38, 95], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-		});
+var murderIcon = L.icon({
+    iconUrl: './data/pine-48.png',
+    iconSize: [38, 50],
+		iconAnchor: [22, 49],
+		popupAnchor: [-3, -55]
+                         // size of the icon
+                            // point from which the popup should open relative to the iconAnchor
+});
 
 		var parkMarkers = parkData.map(function(arr) {
 			if (!arr[3]) {
-				return L.marker([arr[1], arr[0]], {icon: greenIcon}).bindPopup(arr[2]);
-			} else {	
-				return L.marker([arr[1], arr[0]], {icon: greenIcon}).bindPopup(arr[2] + '<br>' + arr[3]);
-	    }
+				return L.marker([arr[1], arr[0]], {icon: murderIcon}).bindPopup(arr[2]);
+			}
+
+		else {	return L.marker([arr[1], arr[0]], {icon: murderIcon}).bindPopup(arr[2] + arr[3]);
+	     }
+
 		});
 
 		var newMarkers = L.featureGroup(parkMarkers);
@@ -111,7 +115,12 @@ var MapContainer = module.exports = React.createClass({
 
 		//crime button and crime marker functionality
 		var murderMarkers = murderData.map(function(arr) {
-			return	L.marker(arr).bindPopup("Homicide");
+			if (!arr[2]) {
+				return L.marker([arr[0], arr[1]]);
+			}
+			else {
+			return	L.marker([arr[0], arr[1]]).bindPopup("date: " + '</br>' + arr[2].slice(0,10));
+		}
 		});
 
 		var mapMarkers = L.featureGroup(murderMarkers);
@@ -174,8 +183,10 @@ var MapContainer = module.exports = React.createClass({
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
+
 					grades = [200000, 300000, 400000, 500000, 600000, 700000, 1000000],
 					gradesLegend = ['200k', '300k', '400k', '500k', '600k', '700k','1M', 'No data'],
+
 					labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
 			div.innerHTML = '<h5 margin="0">Zestimate Home Prices</h5>'
@@ -240,7 +251,7 @@ var MapContainer = module.exports = React.createClass({
 				selected = layer;
 				layer.setStyle({
 					weight: 4,
-					color: '#FFFF00',
+					color: '#FFFF00 ',
 					dashArray: '',
 					fillOpacity: 0.7
 				});
@@ -294,8 +305,10 @@ var MapContainer = module.exports = React.createClass({
 	render: function() {
 		return (
 			<div id='mapWrapper'>
+ 
 				<CommuteChart info={this.state.neighborhoodDetail} />
 				<AgeChart info={this.state.neighborhoodDetail} />
+
 			</div>
 		);
 	}

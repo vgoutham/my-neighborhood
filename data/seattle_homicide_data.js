@@ -183,14 +183,21 @@ var data = [ [ 76648, "BFDC0340-963A-4C0A-9025-5E3581B918EC", 76648, 1389397018,
 function returnData (array) {
   var myData = [];
   for(var i = 0; i < array.length; i ++) {
-    myData.push(array[i][22]);
+    var myArray = array[i][22];
+    var date = array[i][15];
+    myArray.push(date);
+    myData.push(myArray);
   }
     return myData;
 }
 
+
+
 var murderData = returnData(data);
 var myData = murderData.map(function(array) {
-  return array.slice(1,3);
-})
+  return new Array(Number(array[1]), Number(array[2]), array[5]);
+});
+
+console.log(myData);
 
 module.exports = myData;
