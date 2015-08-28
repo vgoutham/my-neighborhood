@@ -23,7 +23,7 @@ main {
 #sidebar {
 	width: 35%;
 	height: calc(100% - 65px);
-	background-color: rgba(32, 45, 48, 0.85);
+	background-color: rgba(32, 45, 48, 0.5);
 	position: absolute;
 	right: 0;
 	transition: .6s all ease;
@@ -129,7 +129,7 @@ footer {
 }
 
 .attribution {
-	padding-top: 0;
+	height:
 	font-size: 0.8em;
 	text-align: center;
 	color: #506C89 ;
@@ -161,6 +161,7 @@ footer {
 	margin: 0.2em;
 }
 .legend i {
+	margin: 0.2em;
 	width: .5em;
 	height: .5em;
 	float: left;
