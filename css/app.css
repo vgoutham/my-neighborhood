@@ -37,6 +37,7 @@ button:focus {
 	z-index: 998;
 	overflow-y: auto;
 	padding-top: 1em;
+	padding-bottom: 1em;
 	box-sizing: border-box;
 	bottom: 0;
 }
@@ -51,8 +52,7 @@ button:focus {
 
 /************ d3 chart js stuff ************/
 .graphs {
-	padding: 2em;
-	border: 1px solid #FFF;
+	padding: 0 2em 2em 2em;
 	display: block;
 	margin: 0 auto;
 }
@@ -179,6 +179,12 @@ header ul img {
 	color: #FFF;
 }
 
+h1 img {
+	display: block;
+	margin: 0 auto;
+	padding-bottom: 1em;
+}
+
 #intro h1 {
 	text-align: center;
 	top: 2em;
@@ -215,4 +221,12 @@ header ul img {
 	background-color: white;
 	background-image: url('https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/48/knife.png');
 	background-repeat: no-repeat;
+}
+#allGraphsContainer {
+	display: none;
+}
+.graphWrap h1 {
+	text-align: center;
+	margin-bottom: 0;
+	color: #8FB2B2;
 }

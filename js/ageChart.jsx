@@ -111,7 +111,7 @@ var AgeDonut = module.exports = React.createClass({
       this.updateGraph(this.props.info);
     }
     return(
-      <article id='ageChart'></article>
+      <article></article>
     );
   }
 });
