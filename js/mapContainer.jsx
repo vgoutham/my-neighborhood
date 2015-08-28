@@ -71,14 +71,24 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
-		//adding park markers
+
+var greenIcon = L.icon({
+    iconUrl: './data/leaf-green.png',
+    iconSize:     [38, 95], // size of the icon
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+
 
 		var parkMarkers = parkData.map(function(arr) {
 			if (!arr[3]) {
-				return L.marker([arr[1], arr[0]]).bindPopup(arr[2]);
+				return L.marker([arr[1], arr[0]], {icon: greenIcon}).bindPopup(arr[2]);
 			}
-			else {	return L.marker([arr[1], arr[0]]).bindPopup(arr[2] + '<br>' + arr[3]);
-					 }
+
+		else {	return L.marker([arr[1], arr[0]], {icon: greenIcon}).bindPopup(arr[2] + '<br>' + arr[3]);
+	     }
+
 		});
 
 		var newMarkers = L.featureGroup(parkMarkers);
@@ -93,12 +103,12 @@ var MapContainer = module.exports = React.createClass({
 			var parkBtn = document.getElementById('parkButton');
 			if(!parkClicked) {
 				map.addLayer(newMarkers);
-				parkBtn.innerHTML = 'Hide Seattle Parks';
+				parkBtn.title = 'Hide Seattle Parks';
 				parkClicked = true;
 			}
 			else {
 				map.removeLayer(newMarkers);
-				parkBtn.innerHTML = 'Show Seattle Parks';
+				parkBtn.title = 'Show Seattle Parks';
 				parkClicked = false;
 			}
 		}
@@ -120,12 +130,12 @@ var MapContainer = module.exports = React.createClass({
 			var btn = document.getElementById('crimeButton');
 			if (murderClicked === false) {
 				map.addLayer(mapMarkers);
-				btn.innerHTML = 'Hide Seattle Homicides';
+				btn.title = 'Hide Seattle Homicides';
 				murderClicked = true;
 			}
 			else {
 				map.removeLayer(mapMarkers);
-				btn.innerHTML = 'Show Seattle Homicides';
+				btn.title = 'Show Seattle Homicides';
 				murderClicked = false;
 			}
 		}
