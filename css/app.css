@@ -75,6 +75,23 @@ text {
 	fill: #FFF;
 }
 
+#relationshipContainer .total{
+  font-size: 18px;
+  font-weight: bold;
+}
+#relationshipContainer .units{
+  fill: #8FB2B2;
+  font-size: 12px;
+}
+#relationshipContainer .label{
+  fill: #CCC;
+  font-size: 12px;
+  font-weight: bold;
+}
+#relationshipContainer .value{
+  font-size: 18px;
+  font-weight: bold;
+}
 
 /************ header ************/
 header {

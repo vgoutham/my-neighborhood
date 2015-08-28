@@ -7,6 +7,8 @@ var murderData = require('../data/seattle_homicide_data.js');
 var CommuteChart = require('./commuteChart.jsx');
 var BuildYearChart = require('./buildYearChart.jsx');
 var parkData = require('../data/seattle_park_data.js');
+var AgeChart = require('./ageChart.jsx');
+var RelationshipChart = require('./relationshipChart.jsx');
 
 
 var MapContainer = module.exports = React.createClass({
@@ -304,9 +306,11 @@ var murderIcon = L.icon({
 	render: function() {
 		return (
 			<div id='mapWrapper'>
+				<RelationshipChart info={this.state.neighborhoodDetail} />
  				<CommuteChart info={this.state.neighborhoodDetail} />
+ 				<AgeChart info={this.state.neighborhoodDetail} />
  				<BuildYearChart info={this.state.neighborhoodDetail} />
-				<AgeChart info={this.state.neighborhoodDetail} />
+
 			</div>
 		);
 	}

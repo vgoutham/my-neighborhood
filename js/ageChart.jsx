@@ -34,7 +34,7 @@ var AgeDonut = module.exports = React.createClass({
       .sort(null)
       .value(function(d) { return d.val; });
 
-    var svg = d3.select('#sidebar')
+    var svg = d3.select('#ageContainer')
       .append('svg')
       .attr('id', 'ageChart')
       .attr('class', 'graphs')
@@ -69,13 +69,13 @@ var AgeDonut = module.exports = React.createClass({
       .attr('dy', '.35em')
       .style('text-anchor', 'middle')
       .text(function(d) { return d.data.name + ', ' + d.data.val + '%'; });
-
+/*
     svg.append('text')
       .attr('dy', '0')
       .style('text-anchor', 'middle')
       .attr('class', 'inner-circle')
       .text(function(d) { return 'Age Distribution'; });
-
+*/
     this.counter += 1;
   },
 
