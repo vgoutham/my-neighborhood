@@ -90,4 +90,3 @@ var CommuteChart = module.exports = React.createClass({
     );
   }
 });
-

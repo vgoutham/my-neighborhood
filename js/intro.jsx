@@ -6,9 +6,9 @@ var Intro = module.exports = React.createClass({
       <article id="intro">
         <h1>myNeighborhood: </h1>
         <p>
-          Seattle is known as a city of neighborhoods.<br/> Luckily, a ton of data exists <br/> about these neighborhoods. <br/> However,
-          there is no good way to <br/> visualize it... Until now!<br/> Using myNeighborhood is easy, <br/> just click on the map and
-          the data <br/> will be displayed below.
+          Seattle is known as a city of neighborhoods.Luckily, a ton of data exists about these neighborhoods. However,
+          there is no good way to  visualize it... Until now! Using myNeighborhood is easy, just click on the map and
+          the data will be displayed below.
         </p>
       </article>
     );

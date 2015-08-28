@@ -8,7 +8,7 @@ body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
-	font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Ubuntu', sans-serif;
 }
 section {
 	width: 100%;
@@ -34,7 +34,7 @@ button:focus {
 	position: absolute;
 	right: 0;
 	transition: .6s all ease;
-	z-index: 999;
+	z-index: 998;
 	overflow-y: auto;
 	padding-top: 1em;
 	box-sizing: border-box;
@@ -89,7 +89,8 @@ header {
 }
 
 header article {
-	font-family: sans-serif;
+	letter-: 3px;
+	font-weight: bold;
 	font-size: 35px;
 	padding-top: 10px;
 	display: inline-block;
@@ -163,18 +164,24 @@ header ul img {
 }
 
 #intro {
+	font-size: 1.5em;
+	justify-content: flex-start;
+	text-align: left;
+	z-index: 999;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
 	font-family: 'Ubuntu', sans-serif;
 	position: absolute;
-	margin-left: 1em;
+	margin-left: .5em;
+	margin-top: -1em;
 	top: 0;
 	color: #FFF;
 	opacity: 0.8;
 }
 
 #intro h1 {
+	text-align: center;
 	top: 2em;
 	margin-bottom: 0;
 }
