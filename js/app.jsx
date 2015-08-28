@@ -10,7 +10,7 @@ var App = React.createClass({
 			<main>
         <Header />
   			<MapContainer />
-        <section id='sidebar'>
+        <section id='sidebar'></section>
           <Intro />
 			</main>
 		)
