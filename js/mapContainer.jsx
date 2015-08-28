@@ -307,11 +307,10 @@ var murderIcon = L.icon({
 		return (
 			<div id='mapWrapper'>
 				<RelationshipChart info={this.state.neighborhoodDetail} />
- 				<CommuteChart info={this.state.neighborhoodDetail} />
- 				<AgeChart info={this.state.neighborhoodDetail} />
  				<BuildYearChart info={this.state.neighborhoodDetail} />
-
-			</div>
+ 				<AgeChart info={this.state.neighborhoodDetail} />
+ 				<CommuteChart info={this.state.neighborhoodDetail} />
+ 			</div>
 		);
 	}
 

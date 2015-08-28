@@ -7,6 +7,8 @@ var CommuteChart = module.exports = React.createClass({
   drawGraph: function(datax) {
     document.getElementById('intro').style.display = 'none';
     $('#allGraphsContainer').toggle();
+    document.getElementById('hoodName').textContent = datax['Demographics:demographics'].response[0].region[0].neighborhood[0];
+    document.getElementById('hoodIncome').textContent = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[0].data[0].attribute[0].values[0].neighborhood[0].value[0]._;
     var commuteDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[2].data[0].attribute;
     var dataArr = [];
     for (var i = 0; i < commuteDistribution.length; i++) {
@@ -38,6 +40,8 @@ var CommuteChart = module.exports = React.createClass({
 
     bars.append('text')
       .attr('class', 'commuteVal')
+      .attr('font-family', 'ubuntu')
+      .style('letter-spacing', '1px')
       .attr('x', function(d) { return ((d.val * 2) + .5) + '%'; })
       .attr('y', 42)
       .attr('dy', '.35em')
@@ -45,6 +49,8 @@ var CommuteChart = module.exports = React.createClass({
 
     bars.append('text')
       .attr('class', 'barValText')
+      .attr('font-family', 'ubuntu')
+      .style('letter-spacing', '1px')
       .attr('x', 0)
       .attr('y', barHeight / 2 - 5)
       .attr('dy', '0')
@@ -54,6 +60,8 @@ var CommuteChart = module.exports = React.createClass({
   },
 
   updateGraph: function(datax) {
+    document.getElementById('hoodName').textContent = datax['Demographics:demographics'].response[0].region[0].neighborhood[0];
+    document.getElementById('hoodIncome').textContent = 'Median income: $' + Math.round(datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[0].data[0].attribute[0].values[0].neighborhood[0].value[0]._);
     var commuteDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[2].data[0].attribute;
     var dataArr = [];
     for (var i = 0; i < commuteDistribution.length; i++) {

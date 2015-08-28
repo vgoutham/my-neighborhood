@@ -75,6 +75,11 @@ text {
 	fill: #FFF;
 }
 
+svg#relation {
+	display: block;
+	margin: 0 auto;
+}
+
 #relationshipContainer .total{
   font-size: 18px;
   font-weight: bold;
@@ -246,4 +251,19 @@ h1 img {
 	text-align: center;
 	margin-bottom: 0;
 	color: #8FB2B2;
+}
+
+#hoodName {
+	text-align: center;
+	color: #C3C3C3;
+	letter-spacing: 1px;
+	font-size: 2em;
+	margin-bottom: 0;
+}
+
+#hoodIncome {
+	text-align: center;
+	color: #FFF;
+	font-size: 1.6em;
+	margin-top: .5em;
 }
