@@ -178,7 +178,7 @@ var MapContainer = module.exports = React.createClass({
 					gradesLegend = ['200k', '300k', '400k', '500k', '600k', '700k','1M', 'No data'],
 					labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
-			div.innerHTML = '<h5 margin="0">Median Home Prices</h5>'
+			div.innerHTML = '<h5 margin="0">Zestimate Home Prices</h5>'
 			for (var i = 0; i < grades.length; i++) {
 				div.innerHTML +=
 					'<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
