@@ -37,6 +37,8 @@ var BuildYearChart = module.exports = React.createClass({
 
     bars.append('text')
       .attr('class', 'buildYearVal')
+      .attr('font-family', 'ubuntu')
+      .style('letter-spacing', '1px')
       .attr('x', function(d) { return ((d.val) + .5) + '%'; })
       .attr('y', 42)
       .attr('dy', '.35em')
@@ -44,6 +46,8 @@ var BuildYearChart = module.exports = React.createClass({
 
     bars.append('text')
       .attr('class', 'buildYearValText')
+      .attr('font-family', 'ubuntu')
+      .style('letter-spacing', '1px')
       .attr('x', 0)
       .attr('y', barHeight / 2 - 5)
       .attr('dy', '0')
