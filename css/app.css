@@ -164,7 +164,7 @@ header ul img {
 }
 
 #intro {
-	font-size: 1.5em;
+	font-size: 1.8em;
 	justify-content: flex-start;
 	text-align: left;
 	z-index: 999;
@@ -177,13 +177,17 @@ header ul img {
 	margin-top: -1em;
 	top: 0;
 	color: #FFF;
-	opacity: 0.8;
 }
 
 #intro h1 {
 	text-align: center;
 	top: 2em;
 	margin-bottom: 0;
+	margin-right: 2em;
+}
+#intro p {
+	text-align: left;
+	font-size: 0.76em;
 }
 
 #buttonWrapper {
