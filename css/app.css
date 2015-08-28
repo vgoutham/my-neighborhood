@@ -18,6 +18,9 @@ main {
 	width: 100%;
 	height: 100%;
 }
+button {
+	cursor: pointer;
+}
 button:focus {
 	outline:0;
 }
@@ -192,7 +195,6 @@ footer {
 }
 
 #buttonWrapper {
-	cursor: pointer;
 	z-index: 1000;
 	display: flex;
 	position: absolute;
