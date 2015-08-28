@@ -5,7 +5,7 @@ var seattleNeighborhoods = require('../data/geojson_cleanedup_remove_median.js')
 var config = require('../config.js');
 var murderData = require('../data/seattle_homicide_data.js');
 var CommuteChart = require('./commuteChart.jsx');
-var AgeChart = require('./ageChart.jsx');
+var BuildYearChart = require('./buildYearChart.jsx');
 var parkData = require('../data/seattle_park_data.js');
 
 
@@ -305,9 +305,8 @@ var murderIcon = L.icon({
 	render: function() {
 		return (
 			<div id='mapWrapper'>
- 
-				<CommuteChart info={this.state.neighborhoodDetail} />
-				<AgeChart info={this.state.neighborhoodDetail} />
+ 				<CommuteChart info={this.state.neighborhoodDetail} />
+ 				<BuildYearChart info={this.state.neighborhoodDetail} />
 
 			</div>
 		);
