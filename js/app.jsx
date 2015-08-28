@@ -13,8 +13,14 @@ var App = React.createClass({
         <section id='sidebar'>
           <Intro />
           <div id='allGraphsContainer'>
+            <article className='graphWrap' id='relationshipContainer'>
+              <h1>Relationship Status</h1>
+            </article>
             <article className='graphWrap' id='commuteContainer'>
               <h1>Average Commute Time</h1>
+            </article>
+            <article className='graphWrap' id='ageContainer'>
+              <h1>Age Distribution</h1>
             </article>
             <article className='graphWrap' id='buildYearContainer'>
               <h1>Build Year Container</h1>
