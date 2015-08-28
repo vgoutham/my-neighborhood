@@ -71,14 +71,14 @@ var MapContainer = module.exports = React.createClass({
 			],
 			attributionControl: false,
 		});
+		
 		//adding park markers
-
 		var parkMarkers = parkData.map(function(arr) {
 			if (!arr[3]) {
 				return L.marker([arr[1], arr[0]]).bindPopup(arr[2]);
+			} else {	
+				return L.marker([arr[1], arr[0]]).bindPopup(arr[2] + '<br>' + arr[3]);
 			}
-			else {	return L.marker([arr[1], arr[0]]).bindPopup(arr[2] + '<br>' + arr[3]);
-					 }
 		});
 
 		var newMarkers = L.featureGroup(parkMarkers);
@@ -169,9 +169,9 @@ var MapContainer = module.exports = React.createClass({
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
-					grades = [0, 100000, 200000, 300000, 400000, 500000, 600000, 1000000],
-					gradesLegend = [0, '100k', '200k', '300k', '400k', '500k', '600k', '1M', 'No data'],
-					labels = [];
+				grades = [0, 100000, 200000, 300000, 400000, 500000, 600000, 1000000],
+				gradesLegend = [0, '100k', '200k', '300k', '400k', '500k', '600k', '1M', 'No data'],
+				labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
 			div.innerHTML = '<h5 margin="0">Median Home Prices</h5>'
 			for (var i = 0; i < grades.length; i++) {
@@ -235,7 +235,7 @@ var MapContainer = module.exports = React.createClass({
 				selected = layer;
 				layer.setStyle({
 					weight: 4,
-					color: '#FFFF00 ',
+					color: '#FFFF00',
 					dashArray: '',
 					fillOpacity: 0.7
 				});
@@ -289,9 +289,9 @@ var MapContainer = module.exports = React.createClass({
 	render: function() {
 		return (
 			<div id='mapWrapper'>
-			<div id="mapStyle"></div>
-			<CommuteChart info={this.state.neighborhoodDetail} />
-			<AgeChart info={this.state.neighborhoodDetail} />
+				<div id="mapStyle"></div>
+				<CommuteChart info={this.state.neighborhoodDetail} />
+				<AgeChart info={this.state.neighborhoodDetail} />
 			</div>
 		);
 	}

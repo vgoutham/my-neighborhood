@@ -2,6 +2,7 @@ var React = require('react');
 
 var Header = require('./header.jsx');
 var MapContainer = require('./mapContainer.jsx');
+var Intro = require('./intro.jsx');
 
 var App = React.createClass({
 	render: function() {
@@ -9,7 +10,9 @@ var App = React.createClass({
 			<main>
         <Header />
   			<MapContainer />
-        <section id='sidebar'></section>
+        <section id='sidebar'>
+          <Intro />
+        </section>
 			</main>
 		)
 	}
