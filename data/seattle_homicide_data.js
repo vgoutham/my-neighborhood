@@ -192,5 +192,5 @@ var murderData = returnData(data);
 var myData = murderData.map(function(array) {
   return array.slice(1,3);
 })
-console.log(myData);
+
 module.exports = myData;

@@ -5,6 +5,7 @@ var CommuteChart = module.exports = React.createClass({
   counter: 0,
 
   drawGraph: function(datax) {
+    document.getElementById('intro').style.display = 'none';
     var commuteDistribution = datax['Demographics:demographics'].response[0].pages[0].page[2].tables[0].table[2].data[0].attribute;
     var dataArr = [];
     for (var i = 0; i < commuteDistribution.length; i++) {

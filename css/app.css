@@ -18,6 +18,13 @@ main {
 	width: 100%;
 	height: 100%;
 }
+button {
+	cursor: pointer;
+}
+button:focus {
+	outline:0;
+}
+
 
 /************ app container stuff ************/
 #sidebar {
@@ -73,7 +80,7 @@ text {
 header {
 /*	text-align: center;*/
 	background: #1a1a1a;
-	
+
 	height: 65px;
 	width: 100%;
 	position: absolute;
@@ -105,19 +112,6 @@ header ul img {
 /*	padding-top: -25px;*/
 	height: 35px;
 }
-/************ footer ************/
-/*
-footer {
-	width: 100%
-	position: absolute;
-	background: #1a1a1a;
-	height: 50px;
-	padding-top: 690px;
-	bottom : 0;
-	text: #fff;
-}
-*/
-
 
 /************ leaflet map stuff ************/
 #mapStyle {
@@ -175,12 +169,10 @@ footer {
 	flex-direction: column;
 	font-family: 'Ubuntu', sans-serif;
 	position: absolute;
-	/*right: 3.8em;*/
-	left: 67%;
+	margin-left: 1em;
 	top: 0;
-	color: white;
+	color: #FFF;
 	opacity: 0.8;
-	display: none !important; /*TAKE THIS OUT LATER*/
 }
 
 #intro h1 {
@@ -188,21 +180,29 @@ footer {
 	margin-bottom: 0;
 }
 
-
-#crimeButton {
-	cursor: pointer;
+#buttonWrapper {
 	z-index: 1000;
-	display: block;
+	display: flex;
 	position: absolute;
-	right: 0;
-	bottom:0;
-	/*border-radius: 30%;*/
+	bottom: 0%;
+	margin-left: 60%;
+	flex-direction: column;
 }
+#buttonWrapper button{
+	border-radius: 100%;
+}
+
 #parkButton {
-	cursor: pointer;
-	z-index: 1000;
-	display: block;
-	position: absolute;
-	right: 0;
-	bottom: 5%;
+	height: 5em;
+	width: 5em;
+	background-color: white;
+	background-image: url('http://innatrichmond.com/wp-content/uploads/2015/06/favicon2.png');
+	background-repeat: no-repeat;
+}
+#crimeButton {
+	height: 5em;
+	width: 5em;
+	background-color: white;
+	background-image: url('https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/48/knife.png');
+	background-repeat: no-repeat;
 }
