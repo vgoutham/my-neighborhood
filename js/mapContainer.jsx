@@ -157,14 +157,13 @@ var murderIcon = L.icon({
 		//add style to tiles
 		var getColor = function(m) {
 			m = parseInt(m);
-			if(m > 1000000) return '#800026';
-			else if(m > 600000)  return '#BD0026';
-			else if(m > 500000)  return '#E31A1C';
-			else if(m > 400000)  return '#FC4E2A';
-			else if(m > 300000)  return '#FD8D3C';
-			else if(m > 200000)  return '#FEB24C';
-			else if(m > 100000)  return '#FED976';
-			else if(m > 0)  return '#FFEDA0';
+			if(m > 1000000) return '#470015';
+			else if(m > 700000)  return '#930000';
+			else if(m > 600000)  return '#CC0000';
+			else if(m > 500000)  return '#FC4E2A';
+			else if(m > 400000)  return '#E5A044';
+			else if(m > 300000)  return '#FED976';
+			else if(m > 200000)  return '#FFEFAA';
 			else return 'grey';
 		};
 
@@ -184,11 +183,13 @@ var murderIcon = L.icon({
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
-					grades = [0, 100000, 200000, 300000, 400000, 500000, 600000, 1000000],
-					gradesLegend = [0, '100k', '200k', '300k', '400k', '500k', '600k', '1M', 'No data'],
+
+					grades = [200000, 300000, 400000, 500000, 600000, 700000, 1000000],
+					gradesLegend = ['200k', '300k', '400k', '500k', '600k', '700k','1M', 'No data'],
+
 					labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
-			div.innerHTML = '<h5 margin="0">Median Home Prices</h5>'
+			div.innerHTML = '<h5 margin="0">Zestimate Home Prices</h5>'
 			for (var i = 0; i < grades.length; i++) {
 				div.innerHTML +=
 					'<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
@@ -304,9 +305,14 @@ var murderIcon = L.icon({
 	render: function() {
 		return (
 			<div id='mapWrapper'>
-			<div id="mapStyle"></div>
-			<CommuteChart info={this.state.neighborhoodDetail} />
-			<AgeChart info={this.state.neighborhoodDetail} />
+// <<<<<<< HEAD
+// 			<div id="mapStyle"></div>
+// 			<CommuteChart info={this.state.neighborhoodDetail} />
+// 			<AgeChart info={this.state.neighborhoodDetail} />
+// =======
+				<CommuteChart info={this.state.neighborhoodDetail} />
+				<AgeChart info={this.state.neighborhoodDetail} />
+// >>>>>>> 77943bfc889237b145e157171e33fc591f2c721b
 			</div>
 		);
 	}
