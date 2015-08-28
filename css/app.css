@@ -112,19 +112,6 @@ header ul img {
 /*	padding-top: -25px;*/
 	height: 35px;
 }
-/************ footer ************/
-/*
-footer {
-	width: 100%
-	position: absolute;
-	background: #1a1a1a;
-	height: 50px;
-	padding-top: 690px;
-	bottom : 0;
-	text: #fff;
-}
-*/
-
 
 /************ leaflet map stuff ************/
 #mapStyle {
@@ -181,12 +168,10 @@ footer {
 	flex-direction: column;
 	font-family: 'Ubuntu', sans-serif;
 	position: absolute;
-	/*right: 3.8em;*/
-	left: 67%;
+	margin-left: 1em;
 	top: 0;
-	color: white;
+	color: #FFF;
 	opacity: 0.8;
-	display: none !important; /*TAKE THIS OUT LATER*/
 }
 
 #intro h1 {

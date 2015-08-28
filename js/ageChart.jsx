@@ -103,7 +103,6 @@ var AgeDonut = module.exports = React.createClass({
         });
   },
 
-
   render: function() {
     if (this.props.info && this.counter == 0) {
       this.drawGraph(this.props.info);

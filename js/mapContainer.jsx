@@ -72,23 +72,19 @@ var MapContainer = module.exports = React.createClass({
 			attributionControl: false,
 		});
 
-var greenIcon = L.icon({
-    iconUrl: './data/leaf-green.png',
-    iconSize:     [38, 95], // size of the icon
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-});
-
-
+		var greenIcon = L.icon({
+		    iconUrl: './data/leaf-green.png',
+		    iconSize:     [38, 95], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
 
 		var parkMarkers = parkData.map(function(arr) {
 			if (!arr[3]) {
 				return L.marker([arr[1], arr[0]], {icon: greenIcon}).bindPopup(arr[2]);
-			}
-
-		else {	return L.marker([arr[1], arr[0]], {icon: greenIcon}).bindPopup(arr[2] + '<br>' + arr[3]);
-	     }
-
+			} else {	
+				return L.marker([arr[1], arr[0]], {icon: greenIcon}).bindPopup(arr[2] + '<br>' + arr[3]);
+	    }
 		});
 
 		var newMarkers = L.featureGroup(parkMarkers);
@@ -179,9 +175,9 @@ var greenIcon = L.icon({
 
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
-					grades = [0, 100000, 200000, 300000, 400000, 500000, 600000, 1000000],
-					gradesLegend = [0, '100k', '200k', '300k', '400k', '500k', '600k', '1M', 'No data'],
-					labels = [];
+				grades = [0, 100000, 200000, 300000, 400000, 500000, 600000, 1000000],
+				gradesLegend = [0, '100k', '200k', '300k', '400k', '500k', '600k', '1M', 'No data'],
+				labels = [];
 			// loop through our density intervals and generate a label with a colored square for each interval
 			div.innerHTML = '<h5 margin="0">Median Home Prices</h5>'
 			for (var i = 0; i < grades.length; i++) {
@@ -245,7 +241,7 @@ var greenIcon = L.icon({
 				selected = layer;
 				layer.setStyle({
 					weight: 4,
-					color: '#FFFF00 ',
+					color: '#FFFF00',
 					dashArray: '',
 					fillOpacity: 0.7
 				});
@@ -299,9 +295,9 @@ var greenIcon = L.icon({
 	render: function() {
 		return (
 			<div id='mapWrapper'>
-			<div id="mapStyle"></div>
-			<CommuteChart info={this.state.neighborhoodDetail} />
-			<AgeChart info={this.state.neighborhoodDetail} />
+				<div id="mapStyle"></div>
+				<CommuteChart info={this.state.neighborhoodDetail} />
+				<AgeChart info={this.state.neighborhoodDetail} />
 			</div>
 		);
 	}
