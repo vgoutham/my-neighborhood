@@ -12,7 +12,6 @@ var App = React.createClass({
   			<MapContainer />
         <section id='sidebar'>
           <Intro />
-        </section>
 			</main>
 		)
 	}
