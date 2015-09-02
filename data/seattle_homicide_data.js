@@ -198,6 +198,4 @@ var myData = murderData.map(function(array) {
   return new Array(Number(array[1]), Number(array[2]), array[5]);
 });
 
-console.log(myData);
-
 module.exports = myData;

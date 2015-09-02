@@ -10,9 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gouthamvreddy/my-neighborhood.git"
+		"url": "git+https://github.com/tamulemon/my-neighborhood.git"
   },
-  "author": "",
+  "author": "Meng Chen, Justin Deluna, Dylan Moberg, Goutham Reddy",
   "license": "ISC",
   "devDependencies": {
     "body": "^5.1.0",
@@ -29,7 +29,6 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "body-parser": "^1.13.3",
     "express": "^4.13.3",
     "superagent": "^1.3.0",
     "xml2js": "^0.4.10"
