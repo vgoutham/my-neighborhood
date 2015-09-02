@@ -26,7 +26,7 @@ button:focus {
 }
 
 
-/************ app container stuff ************/
+/************ app container ************/
 #sidebar {
 	width: 35%;
 	height: calc(100% - 65px);
@@ -42,7 +42,7 @@ button:focus {
 	bottom: 0;
 }
 
-#mapWrapper {
+#map {
 	height: calc(100% - 65px);
 	width: 65%;
 	bottom: 0;
@@ -50,64 +50,15 @@ button:focus {
 
 }
 
-/************ d3 chart js stuff ************/
-.graphs {
-	padding: 0 2em 2em 2em;
-	display: block;
-	margin: 0 auto;
-}
-
-.arc:hover {
-	opacity: .75;
-}
-
-rect {
-	fill: rgba(31, 119, 180, 1);
-	transition: fill 0.3s ease;
-}
-
-rect:hover {
-	fill:rgba(255,60,60,.8);
-}
-
-text {
-	letter-spacing: 0;
-	fill: #FFF;
-}
-
-svg#relation {
-	display: block;
-	margin: 0 auto;
-}
-
-#relationshipContainer .total{
-  font-size: 18px;
-  font-weight: bold;
-}
-#relationshipContainer .units{
-  fill: #8FB2B2;
-  font-size: 12px;
-}
-#relationshipContainer .label{
-  fill: #CCC;
-  font-size: 12px;
-  font-weight: bold;
-}
-#relationshipContainer .value{
-  font-size: 18px;
-  font-weight: bold;
-}
 
 /************ header ************/
 header {
-/*	text-align: center;*/
-	background: #1a1a1a;
-
+	background: #2E3D4C ;
+	text-align: center;
 	height: 65px;
 	width: 100%;
 	position: absolute;
-	text-align: center;
-	color: #177FA3;
+	color: #8FB2B2;
 }
 
 header article {
@@ -124,19 +75,33 @@ header ul {
 	list-style-type: none;
 }
 
-header ul li {
-	font-size: 10px;
-	padding-right: 10px;
-	color: #C2D6D6;
-	display: inline-block;
-}
-
 header ul img {
-/*	padding-top: -25px;*/
 	height: 35px;
 }
 
-/************ leaflet map stuff ************/
+header h1 {
+	letter-spacing: 1px;
+}
+
+header a img {
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 1000;
+	-webkit-transition: all .6s ease;
+	-o-transition: all .6s ease;
+	transition: all .6s ease;
+	filter: grayscale(100%);
+	-webkit-filter: grayscale(100%);
+}
+
+header a img:hover {
+	filter: grayscale(0%);
+	-webkit-filter: grayscale(0%);
+}
+
+
+/************ leaflet map ************/
 #mapStyle {
 	height: calc(100% - 115px);
 	width: 100%;
@@ -152,6 +117,7 @@ header ul img {
 	color: #506C89 ;
 	background: rgba(194, 214, 214, 0.5);
 }
+
 .attribution a {
 	color: #E6E6E6;
 }
@@ -183,6 +149,83 @@ header ul img {
 	float: left;
 	margin-right: .5em;
 	opacity: 0.7;
+}
+
+#buttonWrapper {
+	z-index: 1000;
+	position: inherit;
+	bottom: 35%;
+	left: 0%;
+}
+
+#buttonWrapper button{
+	border-radius: 100%;
+	padding-right: 30px;
+}
+
+#parkButton {
+	display: inline-block;
+	height: 5em;
+	width: 5em;
+	background-color: white;
+	background-image: url('http://innatrichmond.com/wp-content/uploads/2015/06/favicon2.png');
+	background-repeat: no-repeat;
+}
+
+#crimeButton {
+	display: inline-block;
+	height: 5em;
+	width: 5em;
+	background-color: white;
+	background-image: url('https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/48/knife.png');
+	background-repeat: no-repeat;
+}
+
+/************ d3 chart  ************/
+.graphs {
+	padding: 0 2em 2em 2em;
+	margin: 0 auto;
+}
+
+.arc:hover {
+	opacity: .75;
+}
+
+rect {
+	fill: rgba(31, 119, 180, 1);
+	transition: fill 0.3s ease;
+}
+
+rect:hover {
+	fill:rgba(255,60,60,.8);
+}
+
+text {
+	letter-spacing: 0;
+	fill: #FFF;
+}
+
+svg#relation {
+	display: block;
+	margin: 0 auto;
+}
+
+#relationshipContainer .total{
+	font-size: 18px;
+	font-weight: bold;
+}
+#relationshipContainer .units{
+	fill: #8FB2B2;
+	font-size: 12px;
+}
+#relationshipContainer .label{
+	fill: #CCC;
+	font-size: 12px;
+	font-weight: bold;
+}
+#relationshipContainer .value{
+	font-size: 18px;
+	font-weight: bold;
 }
 
 #intro {
@@ -218,32 +261,7 @@ h1 img {
 	font-size: 0.76em;
 }
 
-#buttonWrapper {
-	z-index: 1000;
-	display: flex;
-	position: absolute;
-	bottom: 0%;
-	margin-left: 60%;
-	flex-direction: column;
-}
-#buttonWrapper button{
-	border-radius: 100%;
-}
 
-#parkButton {
-	height: 5em;
-	width: 5em;
-	background-color: white;
-	background-image: url('http://innatrichmond.com/wp-content/uploads/2015/06/favicon2.png');
-	background-repeat: no-repeat;
-}
-#crimeButton {
-	height: 5em;
-	width: 5em;
-	background-color: white;
-	background-image: url('https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/48/knife.png');
-	background-repeat: no-repeat;
-}
 #allGraphsContainer {
 	display: none;
 }
@@ -255,7 +273,7 @@ h1 img {
 
 #hoodName {
 	text-align: center;
-	color: #C3C3C3;
+	color: #E6E6E6 ;
 	letter-spacing: 1px;
 	font-size: 2em;
 	margin-bottom: 0;
@@ -266,23 +284,4 @@ h1 img {
 	color: #FFF;
 	font-size: 1.6em;
 	margin-top: .5em;
-}
-header h1 {
-	letter-spacing: 1px;
-}
-header a img {
-	position: absolute;
-	right: 0;
-	top: 0;
-	z-index: 1000;
-	-webkit-transition: all .6s ease;
-	-o-transition: all .6s ease;
-	transition: all .6s ease;
-	filter: grayscale(100%);
-	-webkit-filter: grayscale(100%);
-}
-
-header a img:hover {
-	filter: grayscale(0%);
-	-webkit-filter: grayscale(0%);
 }
