@@ -19,7 +19,7 @@ var App = React.createClass({
               <h1>Relationship Status</h1>
             </article>
             <article className='graphWrap' id='buildYearContainer'>
-              <h1>Build Year Container</h1>
+              <h1>Year Built</h1>
             </article>
             <article className='graphWrap' id='ageContainer'>
               <h1>Age Distribution</h1>
